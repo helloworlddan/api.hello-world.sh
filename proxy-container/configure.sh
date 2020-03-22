@@ -9,4 +9,4 @@ token="$(gcloud auth print-access-token)"
 service_config=$(curl -H "Authorization: Bearer ${token}" \
   "https://servicemanagement.googleapis.com/v1/services/${service_name}/configs/${config_id}?view=FULL")
 
-echo $service_config | jq > proxy-container/service.json
+echo $service_config | jq > ../proxy-container/service.json

@@ -5,9 +5,6 @@ resource "google_cloud_run_service" "default" {
   location = local.region
 
   template {
-    metadata {
-      namespace = local.project
-    }
     spec {
       containers {
         image = "gcr.io/${local.project}/hwsh-proxy"
@@ -44,3 +41,4 @@ resource "google_cloud_run_service_iam_binding" "public" {
     "allUsers"
   ]
 }
+

@@ -14,7 +14,7 @@ paths:
       summary: Test
       operationId: test
       x-google-backend:
-        address: https://europe-west1-sandbox-271809.cloudfunctions.net/hwsh-api-function-test
+        address: https://europe-west1-sandbox-271809.cloudfunctions.net/hwsh-api-test
       responses:
         '200':
           description: A successful response
