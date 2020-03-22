@@ -1,6 +1,6 @@
 data "archive_file" "test" {
  type = "zip"
- source_dir = "function_test"
+ source_dir = "../functions/test"
  output_path = "../test.zip"
 }
 
