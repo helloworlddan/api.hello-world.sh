@@ -1,0 +1,22 @@
+swagger: '2.0'
+info:
+  title: Hello-World.sh API
+  description: Hello-World.sh API
+  version: 1.0.0
+host: api.hello-world.sh
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /test:
+    get:
+      summary: Test
+      operationId: test
+      x-google-backend:
+        address: https://europe-west1-sandbox-271809.cloudfunctions.net/hwsh-api-function-test
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
