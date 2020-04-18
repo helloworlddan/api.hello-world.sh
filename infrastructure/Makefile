@@ -1,5 +1,5 @@
 infrastructure:
-	tf init
-	tf apply
+	terraform init
+	terraform apply
 
 .PHONY: infrastructure

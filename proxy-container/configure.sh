@@ -1,8 +1,8 @@
 #!/bin/sh
 
 cd ../infrastructure/
-service_name="$(tf output -json | jq -r '.service_name.value')"
-config_id="$(tf output -json | jq -r '.config_id.value')"
+service_name="$(terraform output -json | jq -r '.service_name.value')"
+config_id="$(terraform output -json | jq -r '.config_id.value')"
 
 token="$(gcloud auth print-access-token)"
 
