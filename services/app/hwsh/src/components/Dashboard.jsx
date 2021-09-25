@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 import {auth} from "../firebase";
 const Dashboard = () => {
   const user = useContext(UserContext);
-  const {photoURL, displayName, email, uid, za} = user;
+  const {photoURL, displayName, email, uid, _lat} = user;
   console.log(user);
   
 
@@ -44,7 +44,7 @@ const Dashboard = () => {
             }}>
             <td style={{
             wordBreak: "break-all"
-            }}><code>{za}</code></td>
+            }}><code>{_lat}</code></td>
           </tr>
         </tbody>
         </table>
