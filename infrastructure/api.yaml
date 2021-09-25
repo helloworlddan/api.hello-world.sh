@@ -1,0 +1,112 @@
+swagger: '2.0'
+info:
+  title: HWSH API
+  description: HWSH API
+  version: 1.0.0
+host: api.hello-world.sh
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  firebase:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "https://securetoken.google.com/hwsh-api"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "hwsh-api"
+security:
+  - firebase: []
+paths:
+  /things:
+    get:
+      summary: List all things
+      security:
+        - firebase: []
+      operationId: list-things
+      x-google-backend:
+        address: https://things.api.hello-world.sh
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+    post:
+      summary: Add a new thing
+      security:
+        - firebase: []
+      operationId: add-things
+      x-google-backend:
+        address: https://things.api.hello-world.sh 
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  /things/{key}:
+    get:
+      summary: Get a specific thing referenced by its key.
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: key
+          type: string
+          required: true
+          description: Key of the thing to get
+      operationId: get-things
+      x-google-backend:
+        address: https://things.api.hello-world.sh 
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+    patch:
+      summary: Update a specific thing referenced by its key.
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: key
+          type: string
+          required: true
+          description: Key of the thing to update
+      operationId: patch-things
+      x-google-backend:
+        address: https://things.api.hello-world.sh 
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+    delete:
+      summary: Delete a specific referenced by its key.
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: key
+          type: string
+          required: true
+          description: Key of the thing to delete
+      operationId: delete-things
+      x-google-backend:
+        address: https://things.api.hello-world.sh 
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+  
