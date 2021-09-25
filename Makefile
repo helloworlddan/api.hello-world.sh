@@ -1,5 +1,5 @@
 all:
-	echo "No default target defined."
+	app things proxy
 
 deploy:
 	make -C infrastructure init apply
@@ -8,13 +8,13 @@ destroy:
 	make -C infrastructure destroy
 
 app:
-	make -C services/app build update
+	make -C services/app compile build clean
 
 proxy:
-	make -C services/proxy build update
+	make -C services/proxy build
 
 things:
-	make -C services/things build update
+	make -C services/things build
 
 services: things
 

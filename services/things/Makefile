@@ -10,6 +10,6 @@ build:
 	gcloud builds submit --tag=gcr.io/${PROJECT}/${SERVICE} .
 
 update:
-	gcloud run services update hwsh-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE} --set-env-vars="HWSH_GATEWAY_SA=${GATEWAY_SA},HWSH_ENVIRONMENT=prod,GOOGLE_CLOUD_PROJECT=${PROJECT}"
+	gcloud run services update ${PROJECT}-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE} --set-env-vars="HWSH_GATEWAY_SA=${GATEWAY_SA},HWSH_ENVIRONMENT=prod,GOOGLE_CLOUD_PROJECT=${PROJECT}"
 
 .PHONY: run build update

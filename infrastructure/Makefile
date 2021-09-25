@@ -1,5 +1,5 @@
 init:
-	gsutil mb -f gs://hwsh-api--terraform-state/ || exit 0
+	gsutil mb gs://hwsh-api-terraform-state/ || exit 0
 	terraform init
 
 apply:

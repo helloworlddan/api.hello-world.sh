@@ -54,8 +54,8 @@ resource "google_project_service" "appengine" {
   disable_on_destroy = false
 }
 
-resource "google_project_service" "iam" {
+resource "google_project_service" "cloudresourcemanager" {
   project            = local.project
-  service            = "iam.googleapis.com"
+  service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = false
 }

@@ -9,13 +9,7 @@ build:
 	gcloud builds submit --tag=gcr.io/${PROJECT}/${SERVICE} .
 
 update:
-	gcloud run services update hwsh-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
-
-test:
-	make -C hwsh test
-
-static:
-	make -C hwsh build
+	gcloud run services update ${PROJECT}-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
 
 clean:
 	rm -rf static

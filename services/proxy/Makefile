@@ -14,6 +14,6 @@ build:
 	echo "undefined" > service.json
 
 update:
-	gcloud run services update hwsh-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
+	gcloud run services update ${PROJECT}-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
 
 .PHONY: init run build update
