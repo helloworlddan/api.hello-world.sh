@@ -2,13 +2,12 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "",
-    authDomain: "hwsh-api.firebaseapp.com",
-    databaseURL: "https://hwsh-api.firebaseio.com",
-    projectId: "hwsh-api",
-    storageBucket: "hwsh-api.appspot.com",
-    messagingSenderId: "",
-    appId: ""
+  apiKey: "AIzaSyCvf5TQolHXBDGF_28tNEgZATn0LvHi6bQ",
+  authDomain: "hwsh-api.firebaseapp.com",
+  projectId: "hwsh-api",
+  storageBucket: "hwsh-api.appspot.com",
+  messagingSenderId: "546978254761",
+  appId: "1:546978254761:web:37eda206bbe04ad2d77eb8"
 };
 firebase.initializeApp(firebaseConfig);
 
