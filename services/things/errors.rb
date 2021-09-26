@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class APIError < StandardError
-  def initialize(msg="unknown server error", code=500)
+  def initialize(msg = 'unknown server error', code = 500)
     super(msg)
     @code = code
   end
@@ -7,7 +9,7 @@ class APIError < StandardError
 end
 
 class AuthZError < APIError
-  def initialize(msg="user could not be authorized", code=401)
+  def initialize(msg = 'user could not be authorized', code = 401)
     super(msg, code)
   end
 end
@@ -15,10 +17,10 @@ end
 error APIError do
   e = env['sinatra.error']
   status e.code
-  {:message => e.message}.to_json
+  { message: e.message }.to_json
 end
 
 error do
   status 500
-  {:message => 'internal server error'}.to_json
+  { message: 'internal server error' }.to_json
 end
