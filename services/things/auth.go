@@ -25,17 +25,20 @@ func Authenticate(c *gin.Context) {
 	ctx := c.Request.Context()
 	c.Set("trace.context", ctx)
 
+	// Skip verification in non-prod
 	if Global["environment"].(string) != "prod" {
 		c.Next()
 		return
 	}
 
+	// Trace verification
 	traceToken := c.GetHeader("X-Cloud-Trace-Context")
 	if traceToken != "" {
 		// TODO do something with the trace context
 		c.Set("trace.id", traceToken)
 	}
 
+	// Protocol verification
 	protoHeader := c.GetHeader("X-Forwarded-Proto")
 	if protoHeader == "" {
 		Respond(c, http.StatusUnauthorized, "missing protocol header")
@@ -46,6 +49,7 @@ func Authenticate(c *gin.Context) {
 		return
 	}
 
+	// Gateway/Proxy verification
 	gatewayHeader := c.GetHeader("Authorization")
 	if gatewayHeader == "" {
 		Respond(c, http.StatusUnauthorized, "missing gateway authorization header")
@@ -79,6 +83,7 @@ func Authenticate(c *gin.Context) {
 		return
 	}
 
+	// Original user authorization verification
 	firebaseHeader := c.GetHeader("X-Forwarded-Authorization")
 	if firebaseHeader == "" {
 		Respond(c, http.StatusUnauthorized, "missing authorization user authorization header")
@@ -92,25 +97,23 @@ func Authenticate(c *gin.Context) {
 		return
 	}
 
+	// Gateway/Proxy user pre-flight authorization verification
 	encoded := c.Request.Header.Get("X-Endpoint-API-UserInfo")
 	if encoded == "" {
 		Respond(c, http.StatusUnauthorized, "missing gateway user info header")
 		return
 	}
-
 	bytes, err := base64.RawURLEncoding.DecodeString(encoded)
 	if err != nil {
 		Respond(c, http.StatusUnauthorized, "failed to decode user info header")
 		return
 	}
-
 	var caller Caller
 	err = json.Unmarshal(bytes, &caller)
 	if err != nil {
 		Respond(c, http.StatusUnauthorized, "failed to deserialize user info header")
 		return
 	}
-
 	if token.UID != caller.ID {
 		Respond(c, http.StatusUnauthorized, "mismatching inbound caller identities")
 		return

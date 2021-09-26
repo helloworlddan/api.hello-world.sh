@@ -9,7 +9,7 @@ build:
 	gcloud builds submit --tag=gcr.io/${PROJECT}/${SERVICE} .
 
 update:
-	gcloud run services update ${PROJECT}-${SERVICE} --platform=managed --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
+	gcloud run services update ${PROJECT}-${SERVICE} --region=${REGION} --image=gcr.io/${PROJECT}/${SERVICE}
 
 clean:
 	rm -rf static

@@ -1,2 +1,3 @@
 infrastructure/.terraform
-tf-sa.json
+infrastructure/.terraform.lock.hcl
+

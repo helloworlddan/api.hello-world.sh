@@ -43,15 +43,15 @@ func main() {
 
 func configure(ctx context.Context) {
 	Global = make(map[string]interface{})
-	Global["environment"] = os.Getenv("HWSH_ENVIRONMENT")
+	Global["environment"] = os.Getenv("ENVIRONMENT")
 	if Global["environment"].(string) == "" {
 		Global["environment"] = "dev"
 	}
 	if Global["environment"].(string) == "prod" {
 		gin.SetMode(gin.ReleaseMode)
-		Global["gateway.service_account"] = os.Getenv("HWSH_GATEWAY_SA")
+		Global["gateway.service_account"] = os.Getenv("GATEWAY_SA")
 		if Global["gateway.service_account"].(string) == "" {
-			log.Fatal("failed to read HWSH_GATEWAY_SA in production configuration")
+			log.Fatal("failed to read GATEWAY_SA in production configuration")
 		}
 	}
 	Global["project.id"] = os.Getenv("GOOGLE_CLOUD_PROJECT")

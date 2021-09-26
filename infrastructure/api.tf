@@ -1,3 +1,4 @@
+# Endpoints API service
 resource "google_endpoints_service" "default" {
   service_name   = "api.${local.domain}"
   project        = local.project

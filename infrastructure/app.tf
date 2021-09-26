@@ -1,23 +1,22 @@
+# Disable authentication check to invoke this service
+resource "google_cloud_run_service_iam_binding" "app" {
+  project  = local.project
+  location = local.region
+  service  = google_cloud_run_service.app.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers",
+  ]
+}
+
+# SA with perms for this service
 resource "google_service_account" "app" {
   project      = local.project
   account_id   = "${local.prefix}-app"
   display_name = "${local.prefix}-app"
 }
 
-resource "google_service_account_iam_binding" "app-sa-user" {
-  service_account_id = google_service_account.app.name
-  role               = "roles/iam.serviceAccountUser"
-  members = [
-    "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
-  ]
-}
-
-resource google_project_iam_member "app-cloudlogging" {
-  project = local.project
-  role    = "roles/logging.logWriter"
-  member  = "serviceAccount:${google_service_account.app.email}"
-}
-
+# Service definition
 resource "google_cloud_run_service" "app" {
   project  = local.project
   provider = google-beta
@@ -29,7 +28,7 @@ resource "google_cloud_run_service" "app" {
       containers {
         image = "gcr.io/${local.project}/app"
         env {
-          name = "GOOGLE_CLOUD_PROJECT"
+          name  = "GOOGLE_CLOUD_PROJECT"
           value = local.project
         }
       }
@@ -41,44 +40,32 @@ resource "google_cloud_run_service" "app" {
   }
 }
 
+# Custom domain mapping for this service
 resource "google_cloud_run_domain_mapping" "app" {
   project  = local.project
   location = local.region
   name     = "app.${local.domain}"
-
   metadata {
     namespace = local.project
   }
-
   spec {
     route_name = google_cloud_run_service.app.name
   }
 }
 
-resource "google_cloud_run_service_iam_binding" "app" {
-  project  = local.project
-  location = local.region
-  service  = google_cloud_run_service.app.name
-  role     = "roles/run.invoker"
-  members = [
-    "allUsers",
-  ]
-}
-
+# Service build trigger
 resource "google_cloudbuild_trigger" "app" {
   project  = local.project
   provider = google-beta
   github {
-    name  = "api.hello-world.sh"
-    owner = "helloworlddan"
+    name  = local.repo
+    owner = local.repo_owner
     push {
-      branch = "master"
+      branch = local.branch
     }
   }
-
   name        = "${local.prefix}-app"
   description = "Build pipeline for ${local.prefix} app"
-
   substitutions = {
     _REGION  = local.region
     _PREFIX  = local.prefix
@@ -86,4 +73,13 @@ resource "google_cloudbuild_trigger" "app" {
   }
 
   filename = "services/app/cloudbuild.yaml"
+}
+
+# Allow Cloud Build to bind SA
+resource "google_service_account_iam_binding" "app-sa-user" {
+  service_account_id = google_service_account.app.name
+  role               = "roles/iam.serviceAccountUser"
+  members = [
+    "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+  ]
 }

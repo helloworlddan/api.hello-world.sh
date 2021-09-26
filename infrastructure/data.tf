@@ -1,3 +1,4 @@
+# Firestore database for this project
 resource "google_app_engine_application" "database" {
   project       = local.project
   provider      = google-beta

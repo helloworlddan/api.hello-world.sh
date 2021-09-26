@@ -26,7 +26,7 @@ paths:
         - firebase: []
       operationId: list-things
       x-google-backend:
-        address: https://things.api.hello-world.sh
+        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -40,7 +40,7 @@ paths:
         - firebase: []
       operationId: add-things
       x-google-backend:
-        address: https://things.api.hello-world.sh 
+        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -61,7 +61,7 @@ paths:
           description: Key of the thing to get
       operationId: get-things
       x-google-backend:
-        address: https://things.api.hello-world.sh 
+        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -81,7 +81,7 @@ paths:
           description: Key of the thing to update
       operationId: patch-things
       x-google-backend:
-        address: https://things.api.hello-world.sh 
+        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -90,7 +90,7 @@ paths:
           schema:
             type: string
     delete:
-      summary: Delete a specific referenced by its key.
+      summary: Delete a specific thing referenced by its key.
       security:
         - firebase: []
       parameters:
@@ -101,7 +101,7 @@ paths:
           description: Key of the thing to delete
       operationId: delete-things
       x-google-backend:
-        address: https://things.api.hello-world.sh 
+        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
