@@ -1,10 +1,10 @@
 SERVICE := things
 PROJECT := hwsh-api
 REGION := europe-west1
-GATEWAY_SA := hwsh-api-proxy@hwsh-api.iam.gserviceaccount.com
 
 run:
-	GOOGLE_CLOUD_PROJECT=${PROJECT} go run *.go
+	bundle install
+	GOOGLE_CLOUD_PROJECT=${PROJECT} bundle exec ruby app.rb
 
 build:
 	gcloud builds submit --tag=gcr.io/${PROJECT}/${SERVICE} .

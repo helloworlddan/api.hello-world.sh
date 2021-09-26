@@ -1,14 +1,13 @@
-FROM golang:1.15-buster as builder
-WORKDIR /app
-COPY go.* ./
-RUN go mod download
-COPY . ./
-RUN go build -v -o server
+FROM ruby:2.5-slim
 
-FROM debian:buster-slim
-RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+# Install production dependencies.
+WORKDIR /usr/src/app
+COPY Gemfile Gemfile.lock ./
+ENV BUNDLE_FROZEN=true
+RUN gem install bundler && bundle install --without test
 
-COPY --from=builder /app/server /app/server
-CMD ["/app/server"]
+# Copy local code to the container image.
+COPY ./*.rb ./
+
+# Run the web service on container startup.
+CMD ["ruby", "./app.rb"]
