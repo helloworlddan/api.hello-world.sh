@@ -10,18 +10,6 @@ resource "google_project_service" "cloudbuild" {
   disable_on_destroy = false
 }
 
-resource "google_project_service" "cloudtrace" {
-  project            = local.project
-  service            = "cloudtrace.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "firestore" {
-  project            = local.project
-  service            = "firestore.googleapis.com"
-  disable_on_destroy = false
-}
-
 resource "google_project_service" "identitytoolkit" {
   project            = local.project
   service            = "identitytoolkit.googleapis.com"
@@ -31,18 +19,6 @@ resource "google_project_service" "identitytoolkit" {
 resource "google_project_service" "securetoken" {
   project            = local.project
   service            = "securetoken.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "appengine" {
-  project            = local.project
-  service            = "appengine.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "cloudresourcemanager" {
-  project            = local.project
-  service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = false
 }
 

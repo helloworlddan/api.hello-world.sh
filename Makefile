@@ -1,5 +1,5 @@
 all:
-	app things proxy
+	top things proxy
 
 deploy:
 	make -C infrastructure init apply
@@ -7,15 +7,15 @@ deploy:
 destroy:
 	make -C infrastructure destroy
 
-app:
-	make -C services/app compile build clean
+top:
+	make -C services/top compile build clean
 
 proxy:
 	make -C services/proxy build
 
-things:
-	make -C services/things build
+machine:
+	make -C services/machine build
 
-services: things
+services: machine
 
-.PHONY: static deploy destroy app proxy services things
+.PHONY: static deploy destroy top proxy services machine

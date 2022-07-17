@@ -19,49 +19,14 @@ securityDefinitions:
 security:
   - firebase: []
 paths:
-  /things:
+  /machine:
     get:
-      summary: List all things
+      summary: Describe the machine state
       security:
         - firebase: []
-      operationId: list-things
+      operationId: get-machine
       x-google-backend:
-        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app
-        protocol: h2
-        path_translation: APPEND_PATH_TO_ADDRESS
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
-    post:
-      summary: Add a new thing
-      security:
-        - firebase: []
-      operationId: add-things
-      x-google-backend:
-        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app
-        protocol: h2
-        path_translation: APPEND_PATH_TO_ADDRESS
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
-  /things/{key}:
-    get:
-      summary: Get a specific thing referenced by its key.
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: key
-          type: string
-          required: true
-          description: Key of the thing to get
-      operationId: get-things
-      x-google-backend:
-        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
+        address: https://hwsh-api-machine-e37jkmtdgq-ez.a.run.app
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -70,18 +35,12 @@ paths:
           schema:
             type: string
     patch:
-      summary: Update a specific thing referenced by its key.
+      summary: Switch on machine and connect
       security:
         - firebase: []
-      parameters:
-        - in: path
-          name: key
-          type: string
-          required: true
-          description: Key of the thing to update
-      operationId: patch-things
+      operationId: patch-machine
       x-google-backend:
-        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
+        address: https://hwsh-api-machine-e37jkmtdgq-ez.a.run.app
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
@@ -90,18 +49,12 @@ paths:
           schema:
             type: string
     delete:
-      summary: Delete a specific thing referenced by its key.
+      summary: Stop the machine
       security:
         - firebase: []
-      parameters:
-        - in: path
-          name: key
-          type: string
-          required: true
-          description: Key of the thing to delete
-      operationId: delete-things
+      operationId: delete-machine
       x-google-backend:
-        address: https://hwsh-api-things-e37jkmtdgq-ew.a.run.app 
+        address: https://hwsh-api-machine-e37jkmtdgq-ez.a.run.app
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
