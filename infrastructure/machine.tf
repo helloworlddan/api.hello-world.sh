@@ -50,6 +50,9 @@ resource "google_cloud_run_service" "machine" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale"      = "1"
+        "client.knative.dev/user-image"         = "gcr.io/hwsh-api/machine"
+        "run.googleapis.com/client-name"        = "gcloud"
+        "run.googleapis.com/client-version"     = "392.0.0"
       }
     }
   }
