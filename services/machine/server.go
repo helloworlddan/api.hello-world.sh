@@ -3,12 +3,16 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	gin "github.com/gin-gonic/gin"
 )
+
+//"https://remotedesktop.google.com/access/session/ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8"
 
 // Principal represents the the identity that originally authorized the context of an interaction
 type Principal struct {
@@ -18,7 +22,26 @@ type Principal struct {
 	PictureURL string `header:"picture" firestore:"picture" json:"picture"`
 }
 
+// Config holds the complete context of the managed machine
+type Config struct {
+	Session string
+	Owner   string
+	Zone    string
+	Project string
+	Machine string
+}
+
+var (
+	config *Config
+)
+
 func main() {
+	cfg, err := configure()
+	if err != nil {
+		log.Fatalf("error: %v\n", err)
+	}
+	config = &cfg
+
 	router := gin.Default()
 	machine := router.Group("/machine")
 	machine.Use(UserContextFromAPI)
@@ -29,6 +52,20 @@ func main() {
 	}
 
 	router.Run()
+}
+
+func configure() (Config, error) {
+	cfg := Config{}
+	cfg.Session = os.Getenv("TOP_SESSION")
+	cfg.Owner = os.Getenv("TOP_OWNER")
+	cfg.Zone = os.Getenv("TOP_ZONE")
+	cfg.Machine = os.Getenv("TOP_MACHINE")
+	cfg.Project = os.Getenv("GOOGLE_CLOUD_PROJECT")
+
+	if cfg.Session == "" || cfg.Owner == "" || cfg.Zone == "" || cfg.Machine == "" || cfg.Project == "" {
+		return Config{}, errors.New("config incomplete")
+	}
+	return cfg, nil
 }
 
 func GetHandler(c *gin.Context) {
@@ -63,6 +100,13 @@ func UserContextFromAPI(c *gin.Context) {
 	err = json.Unmarshal(bytes, &caller)
 	if err != nil {
 		log.Printf("error: %v\n", err)
+		c.JSON(http.StatusUnauthorized, "failed to deserialize user info header")
+		c.Abort()
+		return
+	}
+
+	if caller.Email != config.Owner {
+		log.Println("error: unauthorized caller")
 		c.JSON(http.StatusUnauthorized, "failed to deserialize user info header")
 		c.Abort()
 		return

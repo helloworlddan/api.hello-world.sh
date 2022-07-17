@@ -8,6 +8,9 @@ locals {
   repo_owner     = "helloworlddan"
   branch         = "master"
   organization   = "892444794895"
+  machine        = "top"
+  zone           = "${local.region}-a"
+  owner          = "dan@hello-world.sh"
 }
 
 output "project" {

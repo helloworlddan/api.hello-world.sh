@@ -5,7 +5,7 @@ PREFIX := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.p
 GATEWAY_SA := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.gateway_sa.value')
 
 run:
-	GOOGLE_CLOUD_PROJECT=${PROJECT} go run *.go
+	GOOGLE_CLOUD_PROJECT=${PROJECT} TOP_MACHINE=top TOP_ZONE=europe-west4-a TOP_SESSION=ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8 TOP_OWNER=dan@hello-world.sh go run *.go
 
 build:
 	gcloud services enable cloudbuild.googleapis.com

@@ -45,14 +45,30 @@ resource "google_cloud_run_service" "machine" {
           name  = "GOOGLE_CLOUD_PROJECT"
           value = local.project
         }
+        env {
+          name  = "TOP_SESSION"
+          value = "ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8"
+        }
+        env {
+          name  = "TOP_OWNER"
+          value = local.owner
+        }
+        env {
+          name = "TOP_MACHINE"
+          value = local.machine
+        }
+        env {
+          name = "TOP_ZONE"
+          value = local.zone
+        }
       }
     }
     metadata {
       annotations = {
-        "autoscaling.knative.dev/maxScale"      = "1"
-        "client.knative.dev/user-image"         = "gcr.io/hwsh-api/machine"
-        "run.googleapis.com/client-name"        = "gcloud"
-        "run.googleapis.com/client-version"     = "392.0.0"
+        "autoscaling.knative.dev/maxScale"  = "1"
+        "client.knative.dev/user-image"     = "gcr.io/hwsh-api/machine"
+        "run.googleapis.com/client-name"    = "gcloud"
+        "run.googleapis.com/client-version" = "392.0.0"
       }
     }
   }
@@ -90,4 +106,44 @@ resource "google_service_account_iam_binding" "machine-sa-user" {
   members = [
     "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
   ]
+}
+
+# SA with perms for the top machine
+resource "google_service_account" "machine-top" {
+  project      = local.project
+  account_id   = "${local.prefix}-machine-top"
+  display_name = "${local.prefix}-machine-top"
+}
+
+resource "google_compute_instance" "machine-top" {
+  project      = local.project
+  name         = local.machine
+  machine_type = "e2-medium"
+  zone         = "${local.region}-a"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+      type  = "pd-ssd"
+      size  = "20"
+    }
+  }
+
+  network_interface {
+    network = "default"
+
+    access_config {
+      // Ephemeral public IP
+    }
+  }
+
+  scheduling {
+    preemptible = true
+    automatic_restart = false
+  }
+
+  service_account {
+    email  = google_service_account.machine-top.email
+    scopes = ["cloud-platform"]
+  }
 }
