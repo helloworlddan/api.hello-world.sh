@@ -22,6 +22,12 @@ resource "google_project_service" "securetoken" {
   disable_on_destroy = false
 }
 
+resource "google_project_service" "computeengine" {
+  project            = local.project
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
+}
+
 # Allow Cloud Build to deploy to Cloud Run
 resource "google_project_iam_binding" "cloudbuild-deploy-binding" {
   project = local.project
