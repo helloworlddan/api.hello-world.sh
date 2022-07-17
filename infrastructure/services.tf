@@ -30,3 +30,10 @@ resource "google_project_iam_binding" "cloudbuild-deploy-binding" {
     "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
   ]
 }
+
+# Allow Cloud Build to read the Service Management API
+resource "google_project_iam_member" "cloudbuild-servicecontroller" {
+  project = local.project
+  role    = "roles/servicemanagement.serviceController"
+  member  = "serviceAccount:${local.project_number}@cloudbuild.gserviceaccount.com"
+}

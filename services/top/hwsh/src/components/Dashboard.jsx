@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { UserContext } from "../providers/UserProvider";
-import { navigate } from "@reach/router";
 import {auth} from "../firebase";
 const Dashboard = () => {
   const user = useContext(UserContext);

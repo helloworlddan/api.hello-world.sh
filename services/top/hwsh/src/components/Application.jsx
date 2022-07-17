@@ -3,7 +3,6 @@ import { Router } from "@reach/router";
 import SignIn from "./SignIn";
 import Dashboard from "./Dashboard";
 import { UserContext } from "../providers/UserProvider";
-import PasswordReset from "./PasswordReset";
 
 function Application() {
   const user = useContext(UserContext);

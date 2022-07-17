@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { Link } from "@reach/router";
 import { signInWithGoogle } from "../firebase";
 
 const SignIn = () => {
