@@ -2,7 +2,7 @@
 resource "google_cloud_run_service_iam_binding" "static" {
   project  = local.project
   location = local.region
-  service  = google_cloud_run_service.machine.name
+  service  = google_cloud_run_service.static.name
   role     = "roles/run.invoker"
   members = [
     "serviceAccount:${google_service_account.proxy.email}"

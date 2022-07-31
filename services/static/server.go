@@ -9,7 +9,7 @@ import (
 
 func main() {
 	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/", fs)
+	http.Handle("/", fs)
 
 	port := os.Getenv("PORT")
 	if port == "" {
