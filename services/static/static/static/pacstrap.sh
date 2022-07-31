@@ -18,7 +18,12 @@ yes | yay -S --noconfirm google-cloud-sdk visual-studio-code-bin
 mkdir -p "${HOME}/.local/bin"
 (
     cd "${HOME}/.local/bin"
-    curl -Lo tresor https://github.com/helloworlddan/tresor/releases/download/v1.1.4/tresor_linux_amd64
+    if [ $(uname -m) == "x86_64" ]
+    then
+        curl -Lo tresor https://github.com/helloworlddan/tresor/releases/download/v1.1.4/tresor_linux_amd64
+    else
+        curl -Lo tresor https://github.com/helloworlddan/tresor/releases/download/v1.1.4/tresor_linux_arm64
+    fi
     chmod +x tresor
 )
 
