@@ -32,8 +32,10 @@ mkdir -p "${HOME}/.dotfiles"
     git clone https://github.com/helloworlddan/dotfiles
     stow dotfiles 
 )
+echo '\nsource "${HOME}/.bash_profile"\n' >> "${HOME}/.bashrc"
 
 gcloud auth login
+gcloud auth application-default login
 gcloud config set project hwsh-api
 gcloud config set run/region europe-west4
 
