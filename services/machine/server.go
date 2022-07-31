@@ -14,7 +14,7 @@ import (
 
 //"https://remotedesktop.google.com/access/session/ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8"
 
-// Principal represents the the identity that originally authorized the context of an interaction
+// Principal represents the identity that originally authorized the context of an interaction
 type Principal struct {
 	ID         string `header:"user_id" firestore:"user_id" json:"user_id"`
 	Email      string `header:"email" firestore:"email" json:"email"`

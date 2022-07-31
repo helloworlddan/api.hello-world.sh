@@ -47,7 +47,7 @@ resource "google_cloud_run_service" "machine" {
         }
         env {
           name  = "TOP_SESSION"
-          value = "ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8"
+          value = local.session
         }
         env {
           name  = "TOP_OWNER"
