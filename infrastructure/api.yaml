@@ -19,6 +19,25 @@ securityDefinitions:
 security:
   - firebase: []
 paths:
+  /static/{path}:
+    get:
+      summary: Get static assets
+      operationId: get-static
+      parameters:
+        - in: path
+          name: path
+          type: string
+          required: true
+          description: path of static asset
+      x-google-backend:
+        address: https://hwsh-api-static-e37jkmtdgq-ez.a.run.app 
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
   /machine:
     get:
       summary: Describe the machine state

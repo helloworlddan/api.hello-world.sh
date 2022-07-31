@@ -16,6 +16,9 @@ proxy:
 machine:
 	make -C services/machine build
 
-services: machine
+static:
+	make -C services/static build
 
-.PHONY: static deploy destroy top proxy services machine
+services: static machine
+
+.PHONY: static deploy destroy top proxy services machine static
