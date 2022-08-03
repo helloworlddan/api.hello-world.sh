@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	gin "github.com/gin-gonic/gin"
 
@@ -83,18 +84,72 @@ func GetHandler(c *gin.Context) {
 	getCall := instances.Get(config.Project, config.Zone, config.Machine)
 	instance, err := getCall.Do()
 	if err != nil {
-		log.Printf("failed to initialize GCE client: %v\n", err)
+		log.Printf("failed to retrieve instance status: %v\n", err)
 	}
 
-	c.JSON(http.StatusOK, instance.Status)
+	response := make(map[string]string)
+	response["message"] = "machine found"
+	response["status"] = instance.Status
+
+	c.JSON(http.StatusOK, response)
 }
 
 func PatchHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, "unimplemented")
+	ctx := c.Request.Context()
+	gce, err := compute.NewService(ctx)
+	if err != nil {
+		log.Printf("failed to initialize GCE client: %v\n", err)
+	}
+
+	instances := compute.NewInstancesService(gce)
+	startCall := instances.Start(config.Project, config.Zone, config.Machine)
+	_, err = startCall.Do()
+	if err != nil {
+		log.Printf("failed to start instance: %v\n", err)
+	}
+
+	getCall := instances.Get(config.Project, config.Zone, config.Machine)
+	instance, err := getCall.Do()
+	if err != nil {
+		log.Printf("failed to retrieve instance status: %v\n", err)
+	}
+
+	for instance.Status != "RUNNING" {
+		time.Sleep(time.Second * 4)
+
+		instance, err = getCall.Do()
+		if err != nil {
+			log.Printf("failed to retrieve instance status: %v\n", err)
+		}
+	}
+	// Instance running
+	time.Sleep(time.Second * 8) // wait for boot
+
+	response := make(map[string]string)
+	response["message"] = "boot complete"
+	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
+
+	c.JSON(http.StatusOK, response)
 }
 
 func DeleteHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, "unimplemented")
+	ctx := c.Request.Context()
+	gce, err := compute.NewService(ctx)
+	if err != nil {
+		log.Printf("failed to initialize GCE client: %v\n", err)
+	}
+
+	instances := compute.NewInstancesService(gce)
+	stopCall := instances.Stop(config.Project, config.Zone, config.Machine)
+	_, err = stopCall.Do()
+	if err != nil {
+		log.Printf("failed to stop instance: %v\n", err)
+	}
+
+	response := make(map[string]string)
+	response["message"] = "shutdown in progress"
+
+	c.JSON(http.StatusOK, response)
 }
 
 func UserContextFromAPI(c *gin.Context) {
