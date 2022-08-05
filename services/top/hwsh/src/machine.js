@@ -2,6 +2,7 @@ const endpoint = 'https://api.hello-world.sh/machine/';
 
 const executeRequest = async (requestMethod, token) => {
     const response = await fetch(endpoint, {
+        credentials: 'include',
         method: requestMethod,
         headers: {
             'Content-Type': 'application/json',
