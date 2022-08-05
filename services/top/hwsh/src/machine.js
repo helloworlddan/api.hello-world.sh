@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserContext } from "../providers/UserProvider";
+import { UserContext } from "./providers/UserProvider";
 
 const endpoint = 'https://api.hello-world.sh/machine/';
 
