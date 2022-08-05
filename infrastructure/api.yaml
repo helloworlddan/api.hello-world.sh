@@ -40,6 +40,18 @@ paths:
           schema:
             type: string
   /machine:
+    options:
+      summary: CORS preflights
+      operationId: options-machine
+      x-google-backend:
+        address: https://hwsh-api-machine-e37jkmtdgq-ez.a.run.app
+        protocol: h2
+        path_translation: APPEND_PATH_TO_ADDRESS
+      responses:
+        '204':
+          description: A successful response
+          schema:
+            type: string
     get:
       summary: Describe the machine state
       security:

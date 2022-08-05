@@ -53,6 +53,7 @@ func main() {
 		machine.GET("/", GetHandler)
 		machine.PATCH("/", PatchHandler)
 		machine.DELETE("/", DeleteHandler)
+		machine.OPTIONS("/", OptionsHandler)
 	}
 
 	router.Run()
@@ -131,6 +132,8 @@ func PatchHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+func OptionsHandler(c *gin.Context) {}
 
 func DeleteHandler(c *gin.Context) {
 	ctx := c.Request.Context()
