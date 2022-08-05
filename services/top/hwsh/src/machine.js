@@ -1,7 +1,7 @@
 const endpoint = 'https://api.hello-world.sh/machine/';
 
 export const machineStatus = (token) => {
-    const response = fetch(endpoint, {
+    const response = await fetch(endpoint, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -14,13 +14,13 @@ export const machineStatus = (token) => {
         alert(`error: ${response.status}`);
     }
 
-    const result = response.json();
+    const result = await response.json();
 
     alert(`machine status: ${result['status']}`)
 };
 
 export const machineStart = (token) => {
-    const response = fetch(endpoint, {
+    const response = await fetch(endpoint, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
@@ -33,13 +33,13 @@ export const machineStart = (token) => {
         alert(`error: ${response.status}`);
     }
 
-    const result = response.json();
+    const result = await response.json();
 
     alert(`machine: ${result['message']}, redirect: ${result['redirect_link']}`)
 };
 
 export const machineStop = (token) => {
-    const response = fetch(endpoint, {
+    const response = await fetch(endpoint, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const machineStop = (token) => {
         alert(`error: ${response.status}`);
     }
 
-    const result = response.json();
+    const result = await response.json();
 
     alert(`machine: ${result['message']}`)
 };
