@@ -28,7 +28,7 @@ export const machineStart = async (token) => {
     });
 };
 
-export const machineStop = (token) => {
+export const machineStop = async (token) => {
     await fetch(endpoint, {
         method: "DELETE",
         headers: {
