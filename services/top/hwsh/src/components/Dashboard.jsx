@@ -4,7 +4,7 @@ import {auth} from "../firebase";
 import {machineStatus, machineStart, machineStop} from "../machine";
 const Dashboard = () => {
   const user = useContext(UserContext);
-  const {displayName} = user;
+  const {displayName, _lat} = user;
 
   return (
     <div className = "mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">
@@ -15,11 +15,11 @@ const Dashboard = () => {
       </div>
       <button className = "w-full py-3 bg-yellow-600 mt-4 text-white" onClick = {() => {auth.signOut()}}>Sign out</button>
       
-      <button className = "w-full py-3 bg-blue-600 mt-4 text-white" onClick = {() => {machineStatus()}}>Status</button>
+      <button className = "w-full py-3 bg-blue-600 mt-4 text-white" onClick = {() => {machineStatus(_lat)}}>Status</button>
       
-      <button className = "w-full py-3 bg-green-600 mt-4 text-white" onClick = {() => {machineStart()}}>Start</button>
+      <button className = "w-full py-3 bg-green-600 mt-4 text-white" onClick = {() => {machineStart(_lat)}}>Start</button>
 
-      <button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick = {() => {machineStop()}}>Stop</button>
+      <button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick = {() => {machineStop(_lat)}}>Stop</button>
     </div>
   ) 
 };

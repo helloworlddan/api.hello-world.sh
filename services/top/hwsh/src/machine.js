@@ -1,18 +1,12 @@
-import { useContext } from "react";
-import { UserContext } from "./providers/UserProvider";
-
 const endpoint = 'https://api.hello-world.sh/machine/';
 
-export const machineStatus = () => {
-    const user = useContext(UserContext);
-    const {_lat} = user;
-
+export const machineStatus = (token) => {
     const response = fetch(endpoint, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer: ${_lat}`
+            'Authorization': `Bearer: ${token}`
         }
     });
 
@@ -25,16 +19,13 @@ export const machineStatus = () => {
     alert(`machine status: ${result['status']}`)
 };
 
-export const machineStart = () => {
-    const user = useContext(UserContext);
-    const {_lat} = user;
-
+export const machineStart = (token) => {
     const response = fetch(endpoint, {
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer: ${_lat}`
+            'Authorization': `Bearer: ${token}`
         }
     });
 
@@ -44,19 +35,16 @@ export const machineStart = () => {
 
     const result = response.json();
 
-    alert(`machine: ${result['message']}, redirect: ${message['redirect_link']}`)
+    alert(`machine: ${result['message']}, redirect: ${result['redirect_link']}`)
 };
 
-export const machineStop = () => {
-    const user = useContext(UserContext);
-    const {_lat} = user;
-
+export const machineStop = (token) => {
     const response = fetch(endpoint, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer: ${_lat}`
+            'Authorization': `Bearer: ${token}`
         }
     });
 
