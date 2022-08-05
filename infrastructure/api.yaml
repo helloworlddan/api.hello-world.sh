@@ -4,6 +4,9 @@ info:
   description: HWSH API
   version: 1.0.0
 host: api.hello-world.sh
+x-google-endpoints:
+- name: api.hello-world.sh
+  allowCors: True
 schemes:
   - https
 produces:
