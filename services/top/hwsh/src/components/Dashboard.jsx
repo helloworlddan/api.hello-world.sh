@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
 
@@ -49,9 +49,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     machineStatus(_lat);
-    if (machine["status"] && machine["status"] == "Running") {
-      return <Redirect to={machine["redirect_link"]} />
-    }
+    // if (machine["status"] && machine["status"] == "Running") {
+    //   return <Redirect to={machine["redirect_link"]} />
+    // }
   }, []);
 
   return (
