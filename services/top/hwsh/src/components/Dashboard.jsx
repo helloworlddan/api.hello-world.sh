@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Redirect } from 'react-router-dom'
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
+
 const Dashboard = () => {
   const user = useContext(UserContext);
   const { displayName, _lat } = user;
@@ -39,7 +41,7 @@ const Dashboard = () => {
   };
 
   const machineStop = async (token) => {
-    executeRequest("DELETE", token).then((response) => {
+    executeRequest("DELETE", token).then((result) => {
       console.log(`machine: ${result['message']}`)
       setMachine(result);
     });
@@ -48,7 +50,7 @@ const Dashboard = () => {
   useEffect(() => {
     machineStatus(_lat);
     if (machine["status"] && machine["status"] == "Running") {
-      return <Redirect to={machine["redirect_link"]}  />
+      return <Redirect to={machine["redirect_link"]} />
     }
   }, []);
 
