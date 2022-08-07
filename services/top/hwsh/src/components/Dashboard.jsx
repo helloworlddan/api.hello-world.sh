@@ -54,7 +54,7 @@ const Dashboard = () => {
       "redirect_link": "none"
     });
     machineStatus(_lat);
-    // if (machine["status"] && machine["status"] == "Running") {
+    // if (machine["status"] && machine["status"] == "RUNNING") {
     //   return <Redirect to={machine["redirect_link"]} />
     // }
   }, []);
@@ -65,19 +65,18 @@ const Dashboard = () => {
         <div>
           <h3 className="text-2xl font-semibold">Welcome, {displayName}!</h3>
         </div>
-        <div>
-          {
-            machine => {
-            (
-              <div>
-                <p>Message: {machine["message"] || "-"}</p>
-                <p>Machine status: {machine["status"] || "-"}</p>
-                <p>Redirect: {machine["redirect_link"] || "-"}</p>
-              </div>
+        {machine ? (
+          <div>
+            <p>Message: {machine["message"] || "-"}</p>
+            <p>Machine status: {machine["status"] || "-"}</p>
+            <p>Redirect: {machine["redirect_link"] || "-"}</p>
+          </div>
+        ) : (
+          <div>
+            <p>retrieving</p>
+          </div>
             )
-          }
         }
-        </div>
       </div>
       <button className="w-full py-3 bg-yellow-600 mt-4 text-white" onClick={() => { auth.signOut() }}>Sign out</button>
 
