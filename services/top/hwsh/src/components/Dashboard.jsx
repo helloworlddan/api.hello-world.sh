@@ -66,9 +66,17 @@ const Dashboard = () => {
           <h3 className="text-2xl font-semibold">Welcome, {displayName}!</h3>
         </div>
         <div>
-          <p>Message: {machine.message || "-"}</p>
-          <p>Machine status: {machine.status || "-"}</p>
-          <p>Redirect: {machine.redirect_link || "-"}</p>
+          {
+            machine => {
+            (
+              <div>
+                <p>Message: {machine["message"] || "-"}</p>
+                <p>Machine status: {machine["status"] || "-"}</p>
+                <p>Redirect: {machine["redirect_link"] || "-"}</p>
+              </div>
+            )
+          }
+        }
         </div>
       </div>
       <button className="w-full py-3 bg-yellow-600 mt-4 text-white" onClick={() => { auth.signOut() }}>Sign out</button>
