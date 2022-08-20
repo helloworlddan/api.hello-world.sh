@@ -5,7 +5,7 @@ set -eu
 sudo apt-get -y update
 sudo apt-get -y install libnss3 libnspr4 git vim stow golang apt-transport-https ca-certificates gnupg jq ranger lsb-release htop fonts-jetbrains-mono gnome-keyring
 
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - 
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google-cloud-sdk.gpg
 echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
 sudo apt-get -y update
 sudo apt-get -y install google-cloud-sdk
@@ -14,9 +14,9 @@ mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"
 if [ "${arch}" = "x86_64" ]
 then
-    curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor  | sudo apt-key add - 
+    curl https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/hashicorp.gpg
     echo "deb  https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/hashicorp.list
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor  | sudo apt-key add - 
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor  | sudo tee /etc/apt/trusted.gpg.d/vscode.gpg
     echo "deb https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/vscode.list
     sudo apt update
     sudo apt-get install -y code terraform

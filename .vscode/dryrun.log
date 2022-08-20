@@ -1,5 +1,3 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/dan/Code/api.hello-world.sh'
-top things proxy
-make: Leaving directory '/home/dan/Code/api.hello-world.sh'
- 
+/bin/sh: 1: make: not found
+
