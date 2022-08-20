@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   function useInterval(callback, delay) {
     const savedCallback = useRef();
-  
+
     useEffect(() => {
       savedCallback.current = callback;
     }, [callback]);
@@ -70,14 +70,14 @@ const Dashboard = () => {
       "redirect_link": "none"
     });
     machineStatus(_lat);
-    if (machine["status"] && machine["status"] == "RUNNING") {
+    if (machine["status"] && machine["status"] === "RUNNING") {
       return <Navigate to={machine["redirect_link"]} />
     }
-  }, []);
+  }, [_lat, machine, machineStatus]);
 
   useInterval(() => {
     machineStatus(_lat);
-    if (machine && machine["status"] == "RUNNING") {
+    if (machine && machine["status"] === "RUNNING") {
       return <Navigate to={machine["redirect_link"]} />
     }
   }, 1000 * 3);
@@ -95,7 +95,7 @@ const Dashboard = () => {
           <div>
             <p>retrieving</p>
           </div>
-            )
+        )
         }
       </div>
       <button className="w-full py-3 bg-yellow-600 mt-4 text-white" onClick={() => { auth.signOut() }}>Sign out</button>
