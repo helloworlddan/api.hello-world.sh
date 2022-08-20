@@ -1,33 +1,45 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # GNU Make 4.3
+ 
 # Built for x86_64-pc-linux-gnu
+ 
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
+ 
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+ 
 # This is free software: you are free to change and redistribute it.
+ 
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sat Aug 20 10:20:49 2022
+ 
+# Make data base, printed on Sat Aug 20 13:33:53 2022
+ 
 
 # Variables
+ 
 
+ 
 # environment
+ 
 GDK_BACKEND = x11
+ 
 # environment
+ 
 LC_ALL = C
+ 
 # environment
-NO_AT_BRIDGE = 1
-# environment
+ 
 VSCODE_CWD = /home/dan
+ 
 # environment
-GPG_TTY = /dev/tty1
-# environment
-WINDOWPATH = 1
-# environment
-CLOUDSDK_ROOT_DIR = /opt/google-cloud-sdk
+GPG_TTY = not a tty
 # environment
 LESS_TERMCAP_me = [0m
 # default
 MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
 # environment
 GOPATH = /home/dan/.go/
 # automatic
@@ -42,24 +54,24 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 PWD = /home/dan/Code/api.hello-world.sh
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# environment
-MAIL = /var/spool/mail/dan
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/dan/.config/Code/CachedData/6d9b74a70ca9c7733b29f0456fd8195364076dda
+VSCODE_CODE_CACHE_PATH = /home/dan/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LANG = C
 # environment
 XAUTHORITY = /home/dan/.Xauthority
+# environment
+PULSE_SINK = chrome_remote_desktop_session
 # default
 .LOADED := 
 # environment
 LESS_TERMCAP_md = [01;33m
 # default
-.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -75,21 +87,21 @@ LESS_TERMCAP_ue = [0m
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
+SSH_AUTH_SOCK = /tmp/chromoting.dan.ssh_auth_sock
 # default
 .SHELLFLAGS := -c
-# environment
-CLOUDSDK_PYTHON = /usr/bin/python
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
+# environment
+PULSE_CONFIG_PATH = /home/dan/.config/chrome-remote-desktop/pulseaudio#b28354b543
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 79702
+VSCODE_PID = 2650
 # environment
-XDG_SESSION_TYPE = tty
+XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -97,7 +109,7 @@ XDG_SESSION_TYPE = tty
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+DBUS_SESSION_BUS_ADDRESS = disabled:
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -111,31 +123,31 @@ LESS_TERMCAP_us = [01;36m
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 3
+LD_LIBRARY_PATH = /usr/lib/mesa-diverted/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/mesa:/usr/lib/x86_64-linux-gnu/dri:/usr/lib/x86_64-linux-gnu/gallium-pipe
 # environment
-GOOGLE_CLOUD_SDK_HOME = /opt/google-cloud-sdk
+SHLVL = 0
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/dan/.go/bin:/home/dan/.local/bin:/opt/google-cloud-sdk/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/dan/google-cloud-sdk/bin
+PATH = /home/dan/.go/bin:/home/dan/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/dan/google-cloud-sdk/bin
 # environment
 LESS_TERMCAP_se = [0m
 # default
 MAKEFILES := 
-# environment
-MOTD_SHOWN = pam
 # automatic
 ^F = $(notdir $^)
 # environment
+CHROME_CONFIG_HOME = /home/dan/.config/chrome-remote-desktop/chrome-config
+# environment
 LESS_TERMCAP_mb = [01;31m
 # environment
-INVOCATION_ID = 5db05e62080b4c60a66e49304ee757ca
+INVOCATION_ID = ba8212573b9542d9bb5d8990b0ac498e
+# environment
+PULSE_STATE_PATH = /home/dan/.config/chrome-remote-desktop/pulseaudio#b28354b543
 # automatic
 ?F = $(notdir $?)
-# environment
-XDG_SEAT = seat0
 # automatic
 +F = $(notdir $+)
 # environment
@@ -144,24 +156,28 @@ ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 GNUMAKEFLAGS := 
 # environment
 LOGNAME = dan
-# environment
-XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 477
+SYSTEMD_EXEC_PID = 422
 # environment
 EDITOR = vim
 # environment
-DISPLAY = :0
+DISPLAY = :20
 # environment
 USER = dan
 # default
 MAKE_VERSION := 4.3
 # environment
-_ = /usr/bin/make
+PULSE_RUNTIME_PATH = /home/dan/.config/chrome-remote-desktop/pulseaudio#b28354b543
 # environment
-XDG_RUNTIME_DIR = /run/user/1000
+CHROME_REMOTE_DESKTOP_SESSION = 1
+# environment
+_ = /usr/bin/code
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+JOURNAL_STREAM = 8:11403
 # environment
 GOMODCACHE = /home/dan/.go/pkg/mod
 # environment
@@ -171,15 +187,11 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/dan
 # environment
-CLOUDSDK_PYTHON_ARGS = -S
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-eb6c7fb2-1.70.1-main.sock
+VSCODE_IPC_HOOK = /home/dan/.config/Code/1.70.2-main.sock
 # environment
-TERM = linux
-# environment
-XDG_SESSION_ID = 1
+TERM = vt220
 # environment
 GOPROXY = https://proxy.golang.org,direct
 # default
@@ -195,9 +207,9 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 # default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # variable set hash-table stats:
-# Load=93/1024=9%, Rehash=0, Collisions=8/126=6%
+# Load=91/1024=9%, Rehash=0, Collisions=9/124=7%
 
 # Pattern-specific Variable Values
 
@@ -205,7 +217,7 @@ CLOUDSDK_METRICS_ENVIRONMENT = cloudcode.vscode
 
 # Directories
 
-# . (device 65024, inode 14819504): 9 files, no impossibilities.
+# . (device 2049, inode 655364): 9 files, no impossibilities.
 
 # 9 files, no impossibilities in 1 directories.
 
@@ -226,7 +238,7 @@ deploy:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-20 09:36:58.124271241
+#  Last modified 2022-08-20 07:07:52.209443305
 #  File has been updated.
 #  Successfully updated.
 
@@ -278,7 +290,6 @@ all:
 # automatic
 # ^ := 
 # automatic
- 
 # ? := 
 # automatic
 # | := 
@@ -300,7 +311,9 @@ destroy:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'Makefile', line 8):
+ 
 	make -C infrastructure destroy
 
 machine:
@@ -313,6 +326,7 @@ machine:
 
 # Not a target:
 .SUFFIXES:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -336,6 +350,6 @@ machine:
 # strcache performance: lookups = 47 / hit rate = 55%
 # hash-table stats:
 # Load=21/8192=0%, Rehash=0, Collisions=0/47=0%
-# Finished Make data base on Sat Aug 20 10:20:49 2022
+# Finished Make data base on Sat Aug 20 13:33:53 2022
 
  

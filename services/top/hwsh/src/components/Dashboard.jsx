@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { Navigate } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
 
@@ -42,15 +41,25 @@ const Dashboard = () => {
     });
   };
 
+  function redirect(link) {
+    window.location.replace(link);
+    return null;
+  }
+
   useEffect(() => {
     setMachine({
       "status": "refreshing ...",
-      "redirect_link": "none"
+      "redirect_link": "https://remotedesktop.google.com"
     });
     machineStatus(_lat);
-    if (machine && machine["status"] && machine["status"] === "RUNNING") {
-      return <Navigate to={machine["redirect_link"]} />
-    }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      machineStatus(_lat);
+    }, 4000);
+  
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -58,8 +67,7 @@ const Dashboard = () => {
       <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
         {machine ? (
           <div>
-            <p>Status: {machine["status"] || "-"}</p>
-            <p><a href={machine["redirect_link"] || "https://remotedesktop.google.com"}>Connect</a></p>
+            <p>{machine["status"] || ""}</p>
           </div>
         ) : (
           <div>
@@ -68,13 +76,13 @@ const Dashboard = () => {
         )
         }
       </div>
-      <button className="w-full py-3 bg-yellow-600 mt-4 text-white" onClick={() => { auth.signOut() }}>Sign out</button>
-
-      <button className="w-full py-3 bg-blue-600 mt-4 text-white" onClick={() => { machineStatus(_lat) }}>Status</button>
-
       <button className="w-full py-3 bg-green-600 mt-4 text-white" onClick={() => { machineStart(_lat) }}>Start</button>
 
-      <button className="w-full py-3 bg-red-600 mt-4 text-white" onClick={() => { machineStop(_lat) }}>Stop</button>
+      <button className="w-full py-3 bg-yellow-600 mt-4 text-white" onClick={() => { machineStop(_lat) }}>Stop</button>
+
+      <button className="w-full py-3 bg-blue-600 mt-4 text-white" onClick={() => { redirect(machine["redirect_link"]) }}>Connect</button>
+
+      <button className="w-full py-3 bg-red-600 mt-4 text-white" onClick={() => { auth.signOut() }}>Sign out</button>
     </div>
   )
 };
