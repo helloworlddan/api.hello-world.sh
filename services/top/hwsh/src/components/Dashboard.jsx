@@ -26,21 +26,18 @@ const Dashboard = () => {
 
   const machineStatus = async (token) => {
     executeRequest("GET", token).then((result) => {
-      console.log(`machine status: ${result['status']}, redirect: ${result['redirect_link']}`)
       setMachine(result);
     });
   };
 
   const machineStart = async (token) => {
     executeRequest("PATCH", token).then((result) => {
-      console.log(`machine: ${result['message']}, redirect: ${result['redirect_link']}`)
       setMachine(result);
     });
   };
 
   const machineStop = async (token) => {
     executeRequest("DELETE", token).then((result) => {
-      console.log(`machine: ${result['message']}, redirect: ${result['redirect_link']}`)
       setMachine(result);
     });
   };
@@ -48,7 +45,6 @@ const Dashboard = () => {
   useEffect(() => {
     setMachine({
       "status": "refreshing ...",
-      "message": "none",
       "redirect_link": "none"
     });
     machineStatus(_lat);
@@ -62,13 +58,12 @@ const Dashboard = () => {
       <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
         {machine ? (
           <div>
-            <p>Message: {machine["message"] || "-"}</p>
-            <p>Machine status: {machine["status"] || "-"}</p>
-            <p>Redirect: {machine["redirect_link"] || "-"}</p>
+            <p>Status: {machine["status"] || "-"}</p>
+            <p><a href={machine["redirect_link"] || "https://remotedesktop.google.com"}>Connect</a></p>
           </div>
         ) : (
           <div>
-            <p>retrieving</p>
+            <p>retrieving....</p>
           </div>
         )
         }

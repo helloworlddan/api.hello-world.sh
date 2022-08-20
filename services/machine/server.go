@@ -87,7 +87,6 @@ func GetHandler(c *gin.Context) {
 	}
 
 	response := make(map[string]string)
-	response["message"] = "machine found"
 	response["status"] = instance.Status
 	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
 
@@ -126,7 +125,6 @@ func PatchHandler(c *gin.Context) {
 	time.Sleep(time.Second * 8) // wait for boot
 
 	response := make(map[string]string)
-	response["message"] = "boot complete"
 	response["status"] = instance.Status
 	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
 
@@ -149,8 +147,15 @@ func DeleteHandler(c *gin.Context) {
 		log.Printf("failed to stop instance: %v\n", err)
 	}
 
+	getCall := instances.Get(config.Project, config.Zone, config.Machine)
+	instance, err := getCall.Do()
+	if err != nil {
+		log.Printf("failed to retrieve instance status: %v\n", err)
+	}
+
 	response := make(map[string]string)
-	response["message"] = "shutdown in progress"
+	response["status"] = instance.Status
+	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
 
 	c.JSON(http.StatusOK, response)
 }
