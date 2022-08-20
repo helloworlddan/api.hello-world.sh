@@ -70,14 +70,14 @@ const Dashboard = () => {
       "redirect_link": "none"
     });
     machineStatus(_lat);
-    if (machine["status"] && machine["status"] === "RUNNING") {
+    if (machine && machine["status"] && machine["status"] === "RUNNING") {
       return <Navigate to={machine["redirect_link"]} />
     }
   }, [_lat, machine, machineStatus]);
 
   useInterval(() => {
     machineStatus(_lat);
-    if (machine && machine["status"] === "RUNNING") {
+    if (machine && machine["status"] && machine["status"] === "RUNNING") {
       return <Navigate to={machine["redirect_link"]} />
     }
   }, 1000 * 3);
