@@ -75,12 +75,12 @@ const Dashboard = () => {
     }
   }, [_lat, machine, machineStatus]);
 
-  useInterval(() => {
-    machineStatus(_lat);
-    if (machine && machine["status"] && machine["status"] === "RUNNING") {
-      return <Navigate to={machine["redirect_link"]} />
-    }
-  }, 1000 * 3);
+  // useInterval(() => {
+  //   machineStatus(_lat);
+  //   if (machine && machine["status"] && machine["status"] === "RUNNING") {
+  //     return <Navigate to={machine["redirect_link"]} />
+  //   }
+  // }, 3000);
 
   return (
     <div className="mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">
