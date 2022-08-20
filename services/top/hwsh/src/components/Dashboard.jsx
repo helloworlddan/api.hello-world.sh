@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { UserContext } from "../providers/UserProvider";
 import { auth } from "../firebase";
 
 const Dashboard = () => {
   const user = useContext(UserContext);
-  const { displayName, _lat } = user;
+  const { _lat } = user;
   const [machine, setMachine] = useState();
   const endpoint = 'https://api.hello-world.sh/machine/';
 
@@ -71,7 +71,7 @@ const Dashboard = () => {
     });
     machineStatus(_lat);
     if (machine["status"] && machine["status"] == "RUNNING") {
-      return <Redirect to={machine["redirect_link"]} />
+      return <Navigate to={machine["redirect_link"]} />
     }
   }, []);
 
