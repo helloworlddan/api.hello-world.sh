@@ -9,24 +9,6 @@ const Dashboard = () => {
   const [machine, setMachine] = useState();
   const endpoint = 'https://api.hello-world.sh/machine/';
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
   const executeRequest = async (requestMethod, token) => {
     const response = await fetch(endpoint, {
       method: requestMethod,
@@ -74,13 +56,6 @@ const Dashboard = () => {
       return <Navigate to={machine["redirect_link"]} />
     }
   }, []);
-
-  // useInterval(() => {
-  //   machineStatus(_lat);
-  //   if (machine && machine["status"] && machine["status"] === "RUNNING") {
-  //     return <Navigate to={machine["redirect_link"]} />
-  //   }
-  // }, 3000);
 
   return (
     <div className="mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">

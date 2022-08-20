@@ -89,6 +89,7 @@ func GetHandler(c *gin.Context) {
 	response := make(map[string]string)
 	response["message"] = "machine found"
 	response["status"] = instance.Status
+	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
 
 	c.JSON(http.StatusOK, response)
 }
@@ -126,6 +127,7 @@ func PatchHandler(c *gin.Context) {
 
 	response := make(map[string]string)
 	response["message"] = "boot complete"
+	response["status"] = instance.Status
 	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
 
 	c.JSON(http.StatusOK, response)
