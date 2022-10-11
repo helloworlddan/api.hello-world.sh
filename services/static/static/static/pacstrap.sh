@@ -3,7 +3,7 @@
 set -eu
 
 sudo pacman -Syyuu
-sudo pacman -S --noconfirm git vim stow go gnupg jq ranger lsb-release htop gnome-keyring libsecret libgnome-keyring terraform
+sudo pacman -S --noconfirm git vim stow go gnupg jq ranger lsb-release htop gnome-keyring libsecret libgnome-keyring terraform github-cli
 
 git clone https://aur.archlinux.org/yay.git
 (

@@ -9,8 +9,12 @@ sudo apt-get -y install libnss3 libnspr4 git vim stow golang apt-transport-https
 
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google-cloud-sdk.gpg
 echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
+
+curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/github-cli.gpg
+echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
+
 sudo apt-get -y update
-sudo apt-get -y install google-cloud-sdk
+sudo apt-get -y install google-cloud-sdk gh
 
 mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"
