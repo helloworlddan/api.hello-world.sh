@@ -5,7 +5,7 @@ set -eu
 sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
-sudo apt-get -y install libnss3 libnspr4 git vim stow golang apt-transport-https ca-certificates gnupg jq ranger lsb-release htop fonts-jetbrains-mono gnome-keyring
+sudo apt-get -y install libnss3 libnspr4 git vim stow golang apt-transport-https ca-certificates gnupg jq ranger lsb-release htop fonts-jetbrains-mono gnome-keyring nitrogen
 
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google-cloud-sdk.gpg
 echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
