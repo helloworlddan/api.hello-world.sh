@@ -5,7 +5,28 @@ set -eu
 sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
-sudo apt-get -y install libnss3 libnspr4 git vim stow golang apt-transport-https ca-certificates gnupg jq ranger lsb-release htop fonts-jetbrains-mono gnome-keyring nitrogen bspwm kitty sxhkd polybar rofi
+sudo apt-get -y install \
+    apt-transport-https \
+    bspwm \
+    ca-certificates \
+    fonts-jetbrains-mono \
+    git \
+    gnome-keyring \
+    gnupg \
+    golang \
+    htop \
+    jq \
+    kitty \
+    libnspr4 \
+    libnss3 \
+    lsb-release \
+    nitrogen \
+    polybar \
+    ranger \
+    rofi \
+    stow \
+    sxhkd \
+    vim
 
 curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg
 echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
@@ -20,7 +41,7 @@ curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /e
 echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
 
 sudo apt-get -y update
-sudo apt-get -y install google-chrome-stable google-cloud-sdk gh
+sudo apt-get -y install chrome-remote-desktop google-chrome-stable google-cloud-sdk gh
 
 mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"
@@ -97,5 +118,8 @@ gcloud auth login
 gcloud auth application-default login
 gcloud config set project hwsh-api
 gcloud config set run/region europe-west4
+gcloud config set deploy/region europe-west4
+gcloud config set compute/region europe-west4
+gcloud config set artifacts/location europe-west4
 
 exit

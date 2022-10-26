@@ -3,7 +3,28 @@
 set -eu
 
 sudo pacman -Syyuu
-sudo pacman -S --noconfirm git vim stow go gnupg jq ranger lsb-release htop gnome-keyring libsecret libgnome-keyring terraform github-cli nitrogen bspwm kitty sxhkd polybar rofi 
+sudo pacman -S --noconfirm \
+    bspwm \
+    git \
+    github-cli \
+    gnome-keyring \
+    gnupg \
+    go \
+    htop \
+    jq \
+    kitty \
+    libgnome-keyring \
+    libsecret \
+    lsb-release \
+    nitrogen \
+    polybar \
+    ranger \
+    rofi  \
+    stow \
+    sxhkd \
+    terraform \
+    ttf-jetbrains-mono \
+    vim 
 
 git clone https://aur.archlinux.org/yay.git
 (
@@ -13,7 +34,7 @@ git clone https://aur.archlinux.org/yay.git
 )
 rm -rf yay
 
-yes | yay -S --noconfirm google-cloud-sdk visual-studio-code-bin 
+yes | sudo yay -S --noconfirm google-chrome google-cloud-sdk visual-studio-code-bin chrome-remote-desktop 
 
 mkdir -p "${HOME}/.local/bin"
 (
@@ -37,6 +58,8 @@ mkdir -p "${HOME}/.dotfiles"
     stow dotfiles 
 )
 echo '\nsource "${HOME}/.bash_profile"\n' >> "${HOME}/.bashrc"
+
+yes | sudo yay -Scc --noconfirm
 
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
@@ -69,5 +92,8 @@ gcloud auth login
 gcloud auth application-default login
 gcloud config set project hwsh-api
 gcloud config set run/region europe-west4
+gcloud config set deploy/region europe-west4
+gcloud config set compute/region europe-west4
+gcloud config set artifacts/location europe-west4
 
 exit
