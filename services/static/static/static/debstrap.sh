@@ -40,8 +40,11 @@ echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /e
 curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/github-cli.gpg
 echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
 
+curl https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor | sudo tee /etc/apt/keyrings/charm.gpg
+echo "deb [arch=$(dpkg --print-architecture)] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+
 sudo apt-get -y update
-sudo apt-get -y install chrome-remote-desktop google-chrome-stable google-cloud-sdk gh
+sudo apt-get -y install chrome-remote-desktop google-chrome-stable google-cloud-sdk gh gum vhs
 
 mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"

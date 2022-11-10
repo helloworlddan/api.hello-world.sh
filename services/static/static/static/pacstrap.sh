@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "btw"
+
 set -eu
 
 sudo pacman -Syyuu
@@ -34,7 +36,7 @@ git clone https://aur.archlinux.org/yay.git
 )
 rm -rf yay
 
-yes | sudo yay -S --noconfirm google-chrome google-cloud-sdk visual-studio-code-bin chrome-remote-desktop 
+yes | sudo yay -S --noconfirm google-chrome google-cloud-sdk visual-studio-code-bin chrome-remote-desktop  vhs-bin  gum
 
 mkdir -p "${HOME}/.local/bin"
 (
