@@ -26,6 +26,7 @@ sudo apt-get -y install \
     rofi \
     stow \
     sxhkd \
+    tree \
     vim \
     xserver-xephyr
 
@@ -87,7 +88,9 @@ mkdir -p "${HOME}/.dotfiles"
     git clone https://github.com/helloworlddan/dotfiles
     stow dotfiles 
 )
-echo '\nsource "${HOME}/.bash_profile"\n' >> "${HOME}/.bashrc"
+echo ''  >> "${HOME}/.bashrc"
+echo 'source "${HOME}/.bash_profile"' >> "${HOME}/.bashrc"
+echo ''  >> "${HOME}/.bashrc"
 
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
