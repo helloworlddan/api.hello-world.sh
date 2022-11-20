@@ -31,6 +31,7 @@ yes | sudo yay -S --noconfirm \
     polybar \
     ranger \
     rofi  \
+    sox \
     stow \
     sxhkd \
     terraform \

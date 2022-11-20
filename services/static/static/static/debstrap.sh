@@ -24,6 +24,7 @@ sudo apt-get -y install \
     polybar \
     ranger \
     rofi \
+    sox \
     stow \
     sxhkd \
     tree \
