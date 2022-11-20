@@ -26,7 +26,8 @@ sudo apt-get -y install \
     rofi \
     stow \
     sxhkd \
-    vim
+    vim \
+    xserver-xephyr
 
 curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg
 echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
@@ -40,7 +41,7 @@ echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /e
 curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/github-cli.gpg
 echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
 
-curl https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor | sudo tee /etc/apt/keyrings/charm.gpg
+curl https://repo.charm.sh/apt/gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/charm.gpg
 echo "deb [arch=$(dpkg --print-architecture)] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
 
 sudo apt-get -y update
@@ -88,8 +89,6 @@ mkdir -p "${HOME}/.dotfiles"
 )
 echo '\nsource "${HOME}/.bash_profile"\n' >> "${HOME}/.bashrc"
 
-sudo apt-get autoremove -y
-
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
 go install -v github.com/mdempsky/gocode@latest
@@ -116,6 +115,8 @@ go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/godoctor/godoctor@latest
+
+sudo apt-get autoremove -y
 
 gcloud auth login
 gcloud auth application-default login

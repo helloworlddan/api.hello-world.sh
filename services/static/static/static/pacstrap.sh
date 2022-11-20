@@ -5,8 +5,17 @@ echo "btw"
 set -eu
 
 sudo pacman -Syyuu
-sudo pacman -S --noconfirm \
-    bspwm \
+
+git clone https://aur.archlinux.org/yay.git
+(
+    cd yay
+    makepkg -s
+    sudo pacman -U yay*.tar.xz
+)
+rm -rf yay
+
+yes | sudo yay -S --noconfirm \
+ bspwm \
     git \
     github-cli \
     gnome-keyring \
@@ -26,17 +35,13 @@ sudo pacman -S --noconfirm \
     sxhkd \
     terraform \
     ttf-jetbrains-mono \
-    vim 
-
-git clone https://aur.archlinux.org/yay.git
-(
-    cd yay
-    makepkg -s
-    sudo pacman -U yay*.tar.xz
-)
-rm -rf yay
-
-yes | sudo yay -S --noconfirm google-chrome google-cloud-sdk visual-studio-code-bin chrome-remote-desktop  vhs-bin  gum
+    vim \
+    google-chrome \
+    google-cloud-sdk \
+    visual-studio-code-bin \
+    chrome-remote-desktop  \
+    vhs-bin  \
+    gum
 
 mkdir -p "${HOME}/.local/bin"
 (
@@ -60,8 +65,6 @@ mkdir -p "${HOME}/.dotfiles"
     stow dotfiles 
 )
 echo '\nsource "${HOME}/.bash_profile"\n' >> "${HOME}/.bashrc"
-
-yes | sudo yay -Scc --noconfirm
 
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
@@ -89,6 +92,8 @@ go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/godoctor/godoctor@latest
+
+yes | sudo yay -Scc --noconfirm
 
 gcloud auth login
 gcloud auth application-default login
