@@ -1,1 +1,0 @@
-{"buildTargets":["all","deploy","destroy","machine","proxy","services","static","top"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

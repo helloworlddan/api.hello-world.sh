@@ -11,6 +11,7 @@ sudo apt-get -y install \
     ca-certificates \
     fonts-jetbrains-mono \
     git \
+    gnome-dust-icon-theme \
     gnome-keyring \
     gnupg \
     golang \
@@ -27,6 +28,7 @@ sudo apt-get -y install \
     sox \
     stow \
     sxhkd \
+    thunar \
     tree \
     vim \
     xserver-xephyr

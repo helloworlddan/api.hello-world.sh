@@ -18,6 +18,7 @@ yes | sudo yay -S --noconfirm \
  bspwm \
     git \
     github-cli \
+    gnome-dust-icon-theme \
     gnome-keyring \
     gnupg \
     go \
@@ -35,6 +36,7 @@ yes | sudo yay -S --noconfirm \
     stow \
     sxhkd \
     terraform \
+    thunar \
     tree \
     ttf-jetbrains-mono \
     vim \
