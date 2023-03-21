@@ -105,7 +105,7 @@ echo ''  >> "${HOME}/.bashrc"
 mkdir -p "${HOME}/.go/"
 mkdir -p "${HOME}/Code/"
 
-sh
+bash
 
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
