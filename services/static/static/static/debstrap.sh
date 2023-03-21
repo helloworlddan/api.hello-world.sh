@@ -5,6 +5,31 @@ set -eu
 sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
+
+(
+    curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg
+    echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+)
+(
+    curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
+    echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome-remote-desktop/deb/ stable main" | sudo tee /etc/apt/sources.list.d/chrome-remote-desktop.list
+)
+(
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google-cloud-sdk.gpg
+    echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
+)
+(
+    curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/github-cli.gpg
+    echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
+)
+(
+    curl https://repo.charm.sh/apt/gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/charm.gpg
+    echo "deb [arch=$(dpkg --print-architecture)] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+)
+
+sudo apt-get -y update
+sudo apt-get -y install 
+
 sudo apt-get -y install \
     apt-transport-https \
     bspwm \
@@ -17,39 +42,24 @@ sudo apt-get -y install \
     golang \
     htop \
     jq \
-    kitty \
     libnspr4 \
     libnss3 \
     lsb-release \
-    nitrogen \
     polybar \
     ranger \
     rofi \
     sox \
     stow \
     sxhkd \
-    thunar \
     tree \
     vim \
-    xserver-xephyr
-
-curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg
-echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-
-curl https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/chrome-remote-desktop.gpg
-echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome-remote-desktop/deb/ stable main" | sudo tee /etc/apt/sources.list.d/chrome-remote-desktop.list
-
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google-cloud-sdk.gpg
-echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list 
-
-curl https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/github-cli.gpg
-echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
-
-curl https://repo.charm.sh/apt/gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/charm.gpg
-echo "deb [arch=$(dpkg --print-architecture)] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-
-sudo apt-get -y update
-sudo apt-get -y install chrome-remote-desktop google-chrome-stable google-cloud-sdk gh gum vhs
+    xserver-xephyr \
+    chrome-remote-desktop \
+    google-chrome-stable \
+    google-cloud-sdk \
+    gh \
+    gum \
+    vhs
 
 mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"
@@ -82,9 +92,6 @@ else
     echo "unknown architecture\n"
 fi
 
-mkdir -p "${HOME}/.go/"
-mkdir -p "${HOME}/Code/"
-
 mkdir -p "${HOME}/.dotfiles"
 (
     cd "${HOME}/.dotfiles"
@@ -94,6 +101,11 @@ mkdir -p "${HOME}/.dotfiles"
 echo ''  >> "${HOME}/.bashrc"
 echo 'source "${HOME}/.bash_profile"' >> "${HOME}/.bashrc"
 echo ''  >> "${HOME}/.bashrc"
+
+mkdir -p "${HOME}/.go/"
+mkdir -p "${HOME}/Code/"
+
+sh
 
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
