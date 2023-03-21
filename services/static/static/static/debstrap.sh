@@ -53,6 +53,8 @@ sudo apt-get -y install \
     sxhkd \
     tree \
     vim \
+    thunar \
+    kitty \
     xserver-xephyr \
     chrome-remote-desktop \
     google-chrome-stable \
