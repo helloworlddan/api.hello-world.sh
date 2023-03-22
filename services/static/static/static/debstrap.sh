@@ -2,7 +2,7 @@
 
 set -eu
 
-sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list
+sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list # Somehow whacks sudo/root on crostini
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
 
@@ -28,7 +28,6 @@ sudo apt-get -y dist-upgrade
 )
 
 sudo apt-get -y update
-sudo apt-get -y install 
 
 sudo apt-get -y install \
     apt-transport-https \
@@ -53,15 +52,17 @@ sudo apt-get -y install \
     sxhkd \
     tree \
     vim \
-    thunar \
-    kitty \
     xserver-xephyr \
     chrome-remote-desktop \
-    google-chrome-stable \
     google-cloud-sdk \
     gh \
     gum \
     vhs
+
+sudo apt-get -y install \
+    thunar \
+    kitty \
+    google-chrome-stable 
 
 mkdir -p "${HOME}/.local/bin"
 arch="$(uname -m)"
