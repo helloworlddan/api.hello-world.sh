@@ -125,7 +125,7 @@ echo ''  >> "${HOME}/.bashrc"
 mkdir -p "${HOME}/.go/"
 mkdir -p "${HOME}/Code/"
 
-bash
+export GOPATH="${HOME}/.go/"
 
 go install -v github.com/helloworlddan/tortune@latest
 go install -v golang.org/x/tools/gopls@latest
