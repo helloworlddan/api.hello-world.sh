@@ -30,6 +30,23 @@ sudo apt-get -y dist-upgrade
 sudo apt-get -y update
 
 sudo apt-get -y install \
+    cros-adapta \
+    cros-apt-config \
+    cros-garcon \
+    cros-host-fonts \
+    cros-logging \
+    cros-notificationd \
+    cros-pulse-config \
+    cros-sftp \
+    cros-sommelier \
+    cros-sommelier-config \
+    cros-sudo-config \
+    cros-systemd-overrides \
+    cros-ui-config \
+    cros-wayland
+
+sudo apt-get -y install \
+    build-essential \
     apt-transport-https \
     bspwm \
     ca-certificates \
@@ -110,6 +127,7 @@ mkdir -p "${HOME}/Code/"
 
 bash
 
+go install -v github.com/helloworlddan/tortune@latest
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
 go install -v github.com/mdempsky/gocode@latest
