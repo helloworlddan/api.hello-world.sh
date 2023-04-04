@@ -39,7 +39,9 @@ yes | yay -S --noconfirm \
     thunar \
     tree \
     ttf-jetbrains-mono \
+    ttf-jetbrains-mono-nerd \
     vim \
+    neovim \
     google-chrome \
     google-cloud-cli \
     visual-studio-code-bin \
