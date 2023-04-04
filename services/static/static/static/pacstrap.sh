@@ -4,21 +4,22 @@ echo "btw"
 
 set -eu
 
-sudo pacman -Syyuu
+sudo pacman --noconfirm -Syyuu
+
+sudo pacman --noconfirm -S base-devel
 
 git clone https://aur.archlinux.org/yay.git
 (
     cd yay
-    makepkg -s
+    makepkg -si
     sudo pacman -U yay*.tar.xz
 )
 rm -rf yay
 
-yes | sudo yay -S --noconfirm \
- bspwm \
+yes | yay -S --noconfirm \
+    bspwm \
     git \
     github-cli \
-    gnome-dust-icon-theme \
     gnome-keyring \
     gnupg \
     go \
@@ -28,7 +29,6 @@ yes | sudo yay -S --noconfirm \
     libgnome-keyring \
     libsecret \
     lsb-release \
-    nitrogen \
     polybar \
     ranger \
     rofi  \
@@ -41,7 +41,7 @@ yes | sudo yay -S --noconfirm \
     ttf-jetbrains-mono \
     vim \
     google-chrome \
-    google-cloud-sdk \
+    google-cloud-cli \
     visual-studio-code-bin \
     chrome-remote-desktop  \
     vhs-bin  \
@@ -73,6 +73,8 @@ echo ''  >> "${HOME}/.bashrc"
 echo 'source "${HOME}/.bash_profile"' >> "${HOME}/.bashrc"
 echo ''  >> "${HOME}/.bashrc"
 
+bash
+
 go install -v golang.org/x/tools/gopls@latest
 go install -v github.com/go-delve/delve/cmd/dlv@latest
 go install -v github.com/mdempsky/gocode@latest
@@ -100,7 +102,7 @@ go install -v github.com/mgechev/revive@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/godoctor/godoctor@latest
 
-yes | sudo yay -Scc --noconfirm
+yes | yay -Scc --noconfirm
 
 gcloud auth login
 gcloud auth application-default login
