@@ -115,35 +115,35 @@ resource "google_service_account" "machine-top" {
   display_name = "${local.prefix}-machine-top"
 }
 
-resource "google_compute_instance" "machine-top" {
-  project      = local.project
-  name         = local.machine
-  machine_type = "e2-medium"
-  zone         = "${local.region}-a"
+# resource "google_compute_instance" "machine-top" {
+#   project      = local.project
+#   name         = local.machine
+#   machine_type = "c2d-highcpu-4"
+#   zone         = "${local.region}-a"
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-11"
-      type  = "pd-ssd"
-      size  = "20"
-    }
-  }
+#   boot_disk { # switch to provisioned disk
+#     initialize_params {
+#       image = "debian-cloud/debian-11"
+#       type  = "pd-ssd"
+#       size  = "20"
+#     }
+#   }
 
-  network_interface {
-    network = "default"
+#   network_interface {
+#     network = "default"
 
-    access_config {
-      // Ephemeral public IP
-    }
-  }
+#     access_config {
+#       // Ephemeral public IP
+#     }
+#   }
 
-  scheduling {
-    preemptible = true
-    automatic_restart = false
-  }
+#   scheduling {
+#     preemptible = true
+#     automatic_restart = false
+#   }
 
-  service_account {
-    email  = google_service_account.machine-top.email
-    scopes = ["cloud-platform"]
-  }
-}
+#   service_account {
+#     email  = google_service_account.machine-top.email
+#     scopes = ["cloud-platform"]
+#   }
+# }
