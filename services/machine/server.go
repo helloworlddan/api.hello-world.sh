@@ -8,9 +8,13 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	gin "github.com/gin-gonic/gin"
+
+	haversine "github.com/umahmood/haversine"
 
 	compute "google.golang.org/api/compute/v1"
 )
@@ -18,8 +22,8 @@ import (
 // Principal represents the identity that originally authorized the context of an interaction
 type Principal struct {
 	ID         string `header:"user_id" firestore:"user_id" json:"user_id"`
-	Email      string `header:"email" firestore:"email" json:"email"`
-	Name       string `header:"name" firestore:"name" json:"name"`
+	Email      string `header:"email"   firestore:"email"   json:"email"`
+	Name       string `header:"name"    firestore:"name"    json:"name"`
 	PictureURL string `header:"picture" firestore:"picture" json:"picture"`
 }
 
@@ -31,11 +35,10 @@ type Config struct {
 	Project     string
 	Machine     string
 	Environment string
+	Regions     map[string]haversine.Coord
 }
 
-var (
-	config *Config
-)
+var config *Config
 
 func main() {
 	cfg, err := configure()
@@ -65,8 +68,11 @@ func configure() (Config, error) {
 	cfg.Machine = os.Getenv("TOP_MACHINE")
 	cfg.Project = os.Getenv("GOOGLE_CLOUD_PROJECT")
 	cfg.Environment = os.Getenv("ENVIRONMENT")
+	cfg.Regions = seedRegions()
 
-	if cfg.Session == "" || cfg.Owner == "" || cfg.Zone == "" || cfg.Machine == "" || cfg.Project == "" || cfg.Environment == "" {
+	if cfg.Session == "" || cfg.Owner == "" || cfg.Zone == "" || cfg.Machine == "" ||
+		cfg.Project == "" ||
+		cfg.Environment == "" {
 		return Config{}, errors.New("config incomplete")
 	}
 	return cfg, nil
@@ -88,7 +94,10 @@ func GetHandler(c *gin.Context) {
 
 	response := make(map[string]string)
 	response["status"] = instance.Status
-	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
+	response["redirect_link"] = fmt.Sprintf(
+		"https://remotedesktop.google.com/access/session/%s",
+		config.Session,
+	)
 
 	c.JSON(http.StatusOK, response)
 }
@@ -126,7 +135,10 @@ func PatchHandler(c *gin.Context) {
 
 	response := make(map[string]string)
 	response["status"] = instance.Status
-	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
+	response["redirect_link"] = fmt.Sprintf(
+		"https://remotedesktop.google.com/access/session/%s",
+		config.Session,
+	)
 
 	c.JSON(http.StatusOK, response)
 }
@@ -155,7 +167,10 @@ func DeleteHandler(c *gin.Context) {
 
 	response := make(map[string]string)
 	response["status"] = instance.Status
-	response["redirect_link"] = fmt.Sprintf("https://remotedesktop.google.com/access/session/%s", config.Session)
+	response["redirect_link"] = fmt.Sprintf(
+		"https://remotedesktop.google.com/access/session/%s",
+		config.Session,
+	)
 
 	c.JSON(http.StatusOK, response)
 }
@@ -163,7 +178,8 @@ func DeleteHandler(c *gin.Context) {
 func UserContextFromAPI(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	c.Writer.Header().
+		Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 	c.Writer.Header().Set("Access-Control-Allow-Methods", "PATCH, OPTIONS, GET, DELETE")
 
 	if c.Request.Method == "OPTIONS" {
@@ -215,4 +231,71 @@ func UserContextFromAPI(c *gin.Context) {
 	// Context OK
 	c.Set("principal", &caller)
 	c.Next()
+}
+
+func ipLocation(ip string) (haversine.Coord, error) {
+	var lat float64
+	var lon float64
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", fmt.Sprintf("https://ipinfo.io/%s", ip), nil)
+	if err != nil {
+		return haversine.Coord{}, fmt.Errorf("failed to construct request: %v\n", err)
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return haversine.Coord{}, fmt.Errorf("failed to resolve ip address: %v\n", err)
+	}
+	defer res.Body.Close()
+
+	var target map[string]interface{}
+
+	err = json.NewDecoder(res.Body).Decode(&target)
+	if err != nil {
+		return haversine.Coord{}, fmt.Errorf("failed to decode JSON response: %v\n", err)
+	}
+
+	location := target["loc"].(string)
+
+	locationComponents := strings.Split(location, ",")
+
+	lat, err = strconv.ParseFloat(locationComponents[0], 64)
+	if err != nil {
+		return haversine.Coord{}, fmt.Errorf("failed to parse latitude from response: %v\n", err)
+	}
+
+	lon, err = strconv.ParseFloat(locationComponents[1], 64)
+	if err != nil {
+		return haversine.Coord{}, fmt.Errorf("failed to parse longitude from response: %v\n", err)
+	}
+
+	return haversine.Coord{Lat: lat, Lon: lon}, nil
+}
+
+func seedRegions() map[string]haversine.Coord {
+	regions := make(map[string]haversine.Coord)
+	regions["europe-west10"] = haversine.Coord{Lat: 53.0, Lon: 9.0}
+
+	return regions
+}
+
+func closestRegion(source haversine.Coord) (string, float64) {
+	var distance float64
+	distance = 1000000
+
+	var closest string
+
+	for name, coordinates := range config.Regions {
+		_, d := haversine.Distance(source, coordinates)
+
+		if d >= distance {
+			continue
+		}
+
+		distance = d
+		closest = name
+	}
+
+	return closest, distance
 }
