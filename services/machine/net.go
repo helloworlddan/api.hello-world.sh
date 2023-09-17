@@ -99,8 +99,8 @@ func ipLocation(ip string) (haversine.Coord, error) {
 func seedRegions() map[string]haversine.Coord {
 	regions := make(map[string]haversine.Coord)
 
+	regions["europe-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-north1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-
 	regions["europe-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west3"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
@@ -111,10 +111,16 @@ func seedRegions() map[string]haversine.Coord {
 	regions["europe-west8"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west9"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west10"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-
-	regions["europe-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-
 	regions["europe-southwest1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+
+	regions["us-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-east1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-east2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+
+	regions["asia-southwest1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["asia-southwest2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 
 	return regions
 }

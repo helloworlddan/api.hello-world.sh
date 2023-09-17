@@ -1,8 +1,7 @@
 SERVICE := machine
 PROJECT := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.project.value')
-REGION := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.region.value')
-PREFIX := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.prefix.value')
-GATEWAY_SA := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.gateway_sa.value')
+REGION  := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.region.value')
+PREFIX  := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.prefix.value')
 
 run:
 	ENVIRONMENT=dev GOOGLE_CLOUD_PROJECT=${PROJECT} TOP_SESSION=ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8 TOP_OWNER=dan@hello-world.sh go run *.go
