@@ -3,7 +3,7 @@ WORKDIR /app
 COPY go.* ./
 RUN go mod download
 COPY . ./
-RUN go build -v -o server # TODO disable CGO
+RUN CGO_ENABLED=0 go build -v -o server
 
 FROM gcr.io/distroless/static
 COPY --from=builder /app/server /app/server

@@ -4,7 +4,7 @@ REGION  := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.
 PREFIX  := $(shell terraform -chdir=../../infrastructure output -json | jq -r '.prefix.value')
 
 run:
-	ENVIRONMENT=dev GOOGLE_CLOUD_PROJECT=${PROJECT} TOP_SESSION=ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8 TOP_OWNER=dan@hello-world.sh go run *.go
+	ENVIRONMENT=dev GOOGLE_CLOUD_PROJECT=${PROJECT} TOP_SESSION=ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8 TOP_OWNER=dan@hello-world.sh CGO_ENABLED=0 go run *.go
 
 build:
 	gcloud services enable cloudbuild.googleapis.com
