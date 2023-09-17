@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -15,117 +14,6 @@ import (
 	"google.golang.org/api/iterator"
 	"google.golang.org/protobuf/proto"
 )
-
-func getInstance() (*computepb.Instance, error) {
-	ctx := context.Background()
-	client, err := compute.NewInstancesRESTClient(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("failed to initialize client: %v", err)
-	}
-	defer client.Close()
-
-	req := &computepb.AggregatedListInstancesRequest{
-		Project:    config.Project,
-		MaxResults: proto.Uint32(3),
-	}
-
-	it := client.AggregatedList(ctx, req)
-	for {
-		pair, err := it.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			return nil, fmt.Errorf("failed to read instances: %v/n", err)
-		}
-		instances := pair.Value.Instances
-		for _, instance := range instances {
-			if instance.GetName() == config.Machine {
-				return instance, nil
-			}
-		}
-	}
-	return nil, errors.New("no instance found")
-}
-
-func deployInstance(region string) error {
-	zone, err := findZone(region)
-	if err != nil {
-		return fmt.Errorf("unable to find zone: %v", err)
-	}
-
-	disk, err := createDisk(zone)
-	if err != nil {
-		return fmt.Errorf("failed to create disk: %v", err)
-	}
-
-	// TODO continue to create instance
-	_ = disk
-
-	return nil
-}
-
-func destroyInstance(instance *computepb.Instance) error {
-	return nil
-}
-
-func createDisk(zone string) (*computepb.Disk, error) {
-	var diskSize int64
-	diskSize = 20
-
-	ctx := context.Background()
-	client, err := compute.NewDisksRESTClient(ctx)
-	if err != nil {
-		return nil, err
-	}
-	defer client.Close()
-	snapshot := fmt.Sprintf("/projects/%s/global/snapshots/%s", config.Project, config.Snapshot)
-
-	req := &computepb.InsertDiskRequest{
-		Project: config.Project,
-		Zone:    zone,
-		DiskResource: &computepb.Disk{
-			SourceSnapshot: &snapshot,
-			SizeGb:         &diskSize,
-		},
-	}
-	op, err := client.Insert(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-
-	err = op.Wait(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	disk, err := getDisk(zone)
-	if err != nil {
-		return nil, err
-	}
-
-	return disk, nil
-}
-
-func getDisk(zone string) (*computepb.Disk, error) {
-	ctx := context.Background()
-	client, err := compute.NewDisksRESTClient(ctx)
-	if err != nil {
-		return nil, err
-	}
-	defer client.Close()
-
-	req := &computepb.GetDiskRequest{
-		Zone:    zone,
-		Disk:    config.Disk,
-		Project: config.Project,
-	}
-	disk, err := client.Get(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return disk, nil
-}
 
 func findZone(region string) (string, error) {
 	ctx := context.Background()
@@ -210,7 +98,23 @@ func ipLocation(ip string) (haversine.Coord, error) {
 
 func seedRegions() map[string]haversine.Coord {
 	regions := make(map[string]haversine.Coord)
-	regions["europe-west10"] = haversine.Coord{Lat: 53.0, Lon: 9.0}
+
+	regions["europe-north1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+
+	regions["europe-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west3"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west4"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west5"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west6"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west7"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west8"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west9"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west10"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+
+	regions["europe-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+
+	regions["europe-southwest1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 
 	return regions
 }

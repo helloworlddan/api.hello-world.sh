@@ -22,11 +22,18 @@ type Config struct {
 	Session     string
 	Owner       string
 	Project     string
-	Machine     string
-	Snapshot    string
-	Disk        string
 	Environment string
 	Regions     map[string]haversine.Coord
+
+	InstanceName      string
+	MachineType       string
+	Preemtibility     bool
+	ProvisioningModel string
+	AutoRestart       bool
+	OnHostMaintenance string
+	SnapshotName      string
+	DiskName          string
+	DiskType          string
 }
 
 var config *Config
@@ -35,20 +42,28 @@ func configure() (Config, error) {
 	cfg := Config{}
 	cfg.Session = os.Getenv("TOP_SESSION")
 	cfg.Owner = os.Getenv("TOP_OWNER")
-	cfg.Machine = os.Getenv("TOP_MACHINE")
-	cfg.Snapshot = os.Getenv("TOP_SNAPSHOT")
-	cfg.Disk = os.Getenv("TOP_DISK")
 	cfg.Project = os.Getenv("GOOGLE_CLOUD_PROJECT")
 	cfg.Environment = os.Getenv("ENVIRONMENT")
 	cfg.Regions = seedRegions()
 
-	if cfg.Session == "" || cfg.Owner == "" || cfg.Machine == "" ||
-		cfg.Snapshot == "" ||
-		cfg.Disk == "" ||
+	if cfg.Session == "" ||
+		cfg.Owner == "" ||
 		cfg.Project == "" ||
 		cfg.Environment == "" {
 		return Config{}, errors.New("config incomplete")
 	}
+
+	// Runs defaults
+	cfg.InstanceName = "top"
+	cfg.MachineType = "n2d-highcpu-4"
+	cfg.Preemtibility = true
+	cfg.ProvisioningModel = "SPOT"
+	cfg.AutoRestart = true
+	cfg.OnHostMaintenance = "MIGRATE"
+	cfg.SnapshotName = "top"
+	cfg.DiskName = "top"
+	cfg.DiskType = "pd-ssd"
+
 	return cfg, nil
 }
 

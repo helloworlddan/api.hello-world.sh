@@ -62,18 +62,10 @@ func PatchHandler(c *gin.Context) {
 	region, distance := closestRegion(loc)
 	log.Printf("closest region is %s, %.2f kilometers away\n", region, distance)
 
-	err = deployInstance(region)
+	instance, err = deployInstance(region)
 	if err != nil {
 		log.Printf("failed to deploy VM: %v\n", err)
 		response["status"] = "NON_DEPLOYABLE"
-		c.JSON(http.StatusInternalServerError, response)
-		return
-	}
-
-	instance, err = getInstance()
-	if err != nil {
-		log.Printf("failed to get VM status: %v\n", err)
-		response["status"] = "UNKNOWN"
 		c.JSON(http.StatusInternalServerError, response)
 		return
 	}
