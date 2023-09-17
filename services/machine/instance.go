@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"
@@ -62,6 +63,7 @@ func deployInstance(region string) (*computepb.Instance, error) {
 	defer client.Close()
 
 	boot := true
+	autoDelete := false
 	machineType := fmt.Sprintf("zones/%s/machineTypes/%s", zone, config.MachineType)
 
 	req := &computepb.InsertInstanceRequest{
@@ -73,8 +75,9 @@ func deployInstance(region string) (*computepb.Instance, error) {
 			MachineType:     &machineType,
 			Disks: []*computepb.AttachedDisk{
 				{
-					Source: disk.SelfLink,
-					Boot:   &boot,
+					Source:     disk.SelfLink,
+					Boot:       &boot,
+					AutoDelete: &autoDelete,
 				},
 			},
 			Scheduling: &computepb.Scheduling{
@@ -104,5 +107,46 @@ func deployInstance(region string) (*computepb.Instance, error) {
 }
 
 func destroyInstance(instance *computepb.Instance) error {
+	ctx := context.Background()
+	client, err := compute.NewInstancesRESTClient(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to initialize client: %v", err)
+	}
+	defer client.Close()
+
+	req := &computepb.DeleteInstanceRequest{
+		Project:  config.Project,
+		Zone:     *instance.Zone,
+		Instance: *instance.Name,
+	}
+
+	op, err := client.Delete(ctx, req)
+	if err != nil {
+		return err
+	}
+
+	err = op.Wait(ctx)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("deleted instance: %s, in zone %s", *instance.Name, *instance.Zone)
+
+	disk := *instance.Disks[0].Source
+
+	snap, err := createSnapshot(disk)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("created snapshot: %v", snap.Id)
+
+	err = deleteDisk(disk, *instance.Zone)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("deleted disk: %s, in zone %s", disk, *instance.Zone)
+
 	return nil
 }

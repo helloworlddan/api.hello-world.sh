@@ -54,6 +54,32 @@ func createDisk(zone string) (*computepb.Disk, error) {
 	return disk, nil
 }
 
+func deleteDisk(disk string, zone string) error {
+	ctx := context.Background()
+	client, err := compute.NewDisksRESTClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	req := &computepb.DeleteDiskRequest{
+		Project: config.Project,
+		Zone:    zone,
+		Disk:    disk,
+	}
+	op, err := client.Delete(ctx, req)
+	if err != nil {
+		return err
+	}
+
+	err = op.Wait(ctx)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func getDisk(zone string) (*computepb.Disk, error) {
 	ctx := context.Background()
 	client, err := compute.NewDisksRESTClient(ctx)
