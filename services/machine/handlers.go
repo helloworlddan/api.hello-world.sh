@@ -50,7 +50,7 @@ func PatchHandler(c *gin.Context) {
 
 	log.Printf("instance not found")
 
-	addr := ipSource(c.Request)
+	addr := c.ClientIP()
 	log.Printf("client addr is %s\n", addr)
 
 	loc, err := ipLocation(addr)

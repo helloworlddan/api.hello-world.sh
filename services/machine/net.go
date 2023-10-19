@@ -117,7 +117,8 @@ func seedRegions() map[string]haversine.Coord {
 	regions["europe-southwest1"] = haversine.Coord{Lat: 40.416, Lon: 3.703}
 
 	regions["us-central1"] = haversine.Coord{Lat: 41.261, Lon: 95.860}
-	regions["us-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-west1"] = haversine.Coord{Lat: 43.804, Lon: 120.554}
+
 	regions["us-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["us-east1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["us-east2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
