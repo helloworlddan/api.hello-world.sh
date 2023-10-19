@@ -2,7 +2,7 @@
 
 set -eu
 
-sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list # Somehow whacks sudo/root on crostini
+sudo sed -i 's/bullseye/testing/g' /etc/apt/sources.list
 sudo apt-get -y update
 sudo apt-get -y dist-upgrade
 
@@ -19,7 +19,7 @@ echo "deb [arch=$(dpkg --print-architecture)] https://dl.google.com/linux/chrome
 echo "deb https://packages.cloud.google.com/apt cloud-sdk main"                                                   | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list      >/dev/null
 echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main"                        | sudo tee /etc/apt/sources.list.d/github-cli.list            >/dev/null
 echo "deb [arch=$(dpkg --print-architecture)] https://repo.charm.sh/apt/ * *"                                     | sudo tee /etc/apt/sources.list.d/charm.list                 >/dev/null
-echo "deb  https://apt.releases.hashicorp.com $(lsb_release -cs) main"                                            | sudo tee /etc/apt/sources.list.d/hashicorp.list             >/dev/null
+echo "deb  https://apt.releases.hashicorp.com bookworm main"                                                      | sudo tee /etc/apt/sources.list.d/hashicorp.list             >/dev/null
 echo "deb https://packages.microsoft.com/repos/vscode stable main"                                                | sudo tee /etc/apt/sources.list.d/vscode.list                >/dev/null
 
 sudo apt-get -y update
@@ -84,20 +84,20 @@ sudo apt-get -y install \
     chrome-remote-desktop \
     google-chrome-stable 
 
+sudo apt-get autoremove -y
+
 mkdir -p "${HOME}/.local/bin"
 curl -L tresor https://github.com/helloworlddan/tresor/releases/download/v1.1.4/tresor_linux_amd64 > "${HOME}/.local/bin/tresor"
 chmod +x "${HOME}/.local/bin/tresor"
 
-mkdir -p "${HOME}/.dotfiles"
+mkdir -p "${HOME}/Code/github.com/helloworlddan/"
 (
-    cd "${HOME}/.dotfiles"
+    cd "${HOME}/Code/github.com/helloworlddan/"
     git clone https://github.com/helloworlddan/dotfiles
-    stow dotfiles 
+    stow dotfiles -t ${HOME} 
 )
 
 echo 'source "${HOME}/.bash_profile"' >> "${HOME}/.bashrc"
-
-mkdir -p "${HOME}/Code/"
 
 mkdir -p "${HOME}/.go/"
 export GOPATH="${HOME}/.go/"
@@ -129,15 +129,5 @@ go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/mgechev/revive@latest
 go install -v github.com/godoctor/godoctor@latest
-
-sudo apt-get autoremove -y
-
-gcloud auth login
-gcloud auth application-default login
-gcloud config set project hwsh-api
-gcloud config set run/region europe-west4
-gcloud config set deploy/region europe-west4
-gcloud config set compute/region europe-west4
-gcloud config set artifacts/location europe-west4
 
 exit
