@@ -99,8 +99,22 @@ func ipLocation(ip string) (haver.Coord, error) {
 func seedRegions() map[string]haver.Coord {
 	regions := make(map[string]haver.Coord)
 
+	regions["asia-east1"] = haver.Coord{Lat: 24.066, Lon: 120.533}              // Changhua County
+	regions["asia-east2"] = haver.Coord{Lat: 22.319, Lon: 114.169}              // Hong Kong
+	regions["asia-northeast1"] = haver.Coord{Lat: 35.685, Lon: 139.751}         // Tokio
+	regions["asia-northeast2"] = haver.Coord{Lat: 34.666, Lon: 135.500}         // Osaka
+	regions["asia-northeast3"] = haver.Coord{Lat: 37.565, Lon: 126.565}         // Seoul
+	regions["asia-south1"] = haver.Coord{Lat: 18.975, Lon: 72.825}              // Mumbai
+	regions["asia-south2"] = haver.Coord{Lat: 28.684, Lon: 77.222}              // Delhi
+	regions["asia-southeast1"] = haver.Coord{Lat: 1.366, Lon: 103.800}          // Singapore
+	regions["asia-southeast2"] = haver.Coord{Lat: -6.174, Lon: 106.829}         // Jakarta
+	regions["australia-southeast1"] = haver.Coord{Lat: -33.869, Lon: 151.209}   // Sydney
+	regions["australia-southeast2"] = haver.Coord{Lat: -37.813, Lon: 144.963}   // Melbourne
 	regions["europe-central2"] = haver.Coord{Lat: 52.229, Lon: 21.012}          // Warsaw
 	regions["europe-north1"] = haver.Coord{Lat: 60.569, Lon: 27.187}            // Hamina
+	regions["europe-southwest1"] = haver.Coord{Lat: 40.416, Lon: 3.703}         // Madrid
+	regions["europe-west10"] = haver.Coord{Lat: 52.520, Lon: 13.404}            // Berlin
+	regions["europe-west12"] = haver.Coord{Lat: 47.070, Lon: 7.686}             // Turin
 	regions["europe-west1"] = haver.Coord{Lat: 50.470, Lon: 3.817}              // St. Ghislain
 	regions["europe-west2"] = haver.Coord{Lat: 51.507, Lon: 0.127}              // London
 	regions["europe-west3"] = haver.Coord{Lat: 50.110, Lon: 8.682}              // Frankfurt
@@ -108,33 +122,22 @@ func seedRegions() map[string]haver.Coord {
 	regions["europe-west6"] = haver.Coord{Lat: 47.376, Lon: 8.541}              // Zurich
 	regions["europe-west8"] = haver.Coord{Lat: 45.464, Lon: 9.190}              // Milan
 	regions["europe-west9"] = haver.Coord{Lat: 48.856, Lon: 2.352}              // Paris
-	regions["europe-west10"] = haver.Coord{Lat: 52.520, Lon: 13.404}            // Berlin
-	regions["europe-west12"] = haver.Coord{Lat: 47.070, Lon: 7.686}             // Turin
-	regions["europe-southwest1"] = haver.Coord{Lat: 40.416, Lon: 3.703}         // Madrid
+	regions["me-central1"] = haver.Coord{Lat: 25.286, Lon: 51.533}              // Doha
+	regions["me-central2"] = haver.Coord{Lat: 26.420, Lon: 50.088}              // Dammam
+	regions["me-west1"] = haver.Coord{Lat: 32.067, Lon: 34.764}                 // Tel Aviv
+	regions["northamerica-northeast1"] = haver.Coord{Lat: 45.501, Lon: -73.567} // Montreal
+	regions["northamerica-northeast2"] = haver.Coord{Lat: 43.653, Lon: -79.383} // Toronto
+	regions["southamerica-east1"] = haver.Coord{Lat: -23.555, Lon: -46.639}     // Sao Paolo
+	regions["southamerica-west1"] = haver.Coord{Lat: -33.357, Lon: -70.729}     // Quilicura
 	regions["us-central1"] = haver.Coord{Lat: 41.261, Lon: -95.860}             // Council Bluffs
-	regions["us-west1"] = haver.Coord{Lat: 43.804, Lon: -120.554}               // Oregon
-	regions["us-west2"] = haver.Coord{Lat: 34.054, Lon: -118.242}               // Los Angeles
-	regions["us-west3"] = haver.Coord{Lat: 40.760, Lon: -111.891}               // Salt Lake City
-	regions["us-west4"] = haver.Coord{Lat: 36.171, Lon: -115.139}               // Las Vegas
 	regions["us-east1"] = haver.Coord{Lat: 33.126, Lon: -80.008}                // Berkely County
 	regions["us-east4"] = haver.Coord{Lat: 39.076, Lon: -77.653}                // Loudoun County
 	regions["us-east5"] = haver.Coord{Lat: 39.961, Lon: -82.998}                // Columbus
 	regions["us-south1"] = haver.Coord{Lat: 32.776, Lon: -96.797}               // Dallas
-	regions["northamerica-northeast1"] = haver.Coord{Lat: 45.501, Lon: -73.567} // Montreal
-	regions["northamerica-northeast2"] = haver.Coord{Lat: 43.653, Lon: -79.383} // Toronto
-	regions["southamerica-west1"] = haver.Coord{Lat: -33.357, Lon: -70.729}     // Quilicura
-	regions["southamerica-east1"] = haver.Coord{Lat: -23.555, Lon: -46.639}     // Sao Paolo
-	regions["asia-south1"] = haver.Coord{Lat: 18.975, Lon: 72.825}              // Mumbai
-	regions["asia-south2"] = haver.Coord{Lat: 28.684, Lon: 77.222}              // Delhi
-	regions["asia-southeast1"] = haver.Coord{Lat: 1.366, Lon: 103.800}          // Singapore
-	regions["asia-southeast2"] = haver.Coord{Lat: -6.174, Lon: 106.829}         // Jakarta
-	regions["asia-east1"] = haver.Coord{Lat: 24.066, Lon: 120.533}              // Changhua County
-	regions["asia-east2"] = haver.Coord{Lat: 22.319, Lon: 114.169}              // Hong Kong
-	regions["asia-northeast1"] = haver.Coord{Lat: 35.685, Lon: 139.751}         // Tokio
-	regions["asia-northeast2"] = haver.Coord{Lat: 34.666, Lon: 135.500}         // Osaka
-	regions["asia-northeast3"] = haver.Coord{Lat: 37.565, Lon: 126.565}         // Seoul
-	regions["australia-southeast1"] = haver.Coord{Lat: -33.869, Lon: 151.209}   // Sydney
-	regions["australia-southeast2"] = haver.Coord{Lat: -37.813, Lon: 144.963}   // Melbourne
+	regions["us-west1"] = haver.Coord{Lat: 43.804, Lon: -120.554}               // Oregon
+	regions["us-west2"] = haver.Coord{Lat: 34.054, Lon: -118.242}               // Los Angeles
+	regions["us-west3"] = haver.Coord{Lat: 40.760, Lon: -111.891}               // Salt Lake City
+	regions["us-west4"] = haver.Coord{Lat: 36.171, Lon: -115.139}               // Las Vegas
 
 	return regions
 }
