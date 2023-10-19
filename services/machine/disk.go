@@ -3,12 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"
 )
 
 func createDisk(zone string) (*computepb.Disk, error) {
+	name := "top"
+
 	var diskSize int64
 	diskSize = 20
 
@@ -18,10 +21,14 @@ func createDisk(zone string) (*computepb.Disk, error) {
 		return nil, err
 	}
 	defer client.Close()
-	snapshot := snapshotName()
+	snapshot := fmt.Sprintf(
+		"projects/%s/global/snapshots/%s",
+		config.Project,
+		config.SnapshotName,
+	)
 
 	diskType := fmt.Sprintf(
-		"projects/%s/zone/%s/diskType/%s",
+		"projects/%s/zones/%s/diskTypes/%s",
 		config.Project,
 		zone,
 		config.DiskType,
@@ -31,6 +38,7 @@ func createDisk(zone string) (*computepb.Disk, error) {
 		Project: config.Project,
 		Zone:    zone,
 		DiskResource: &computepb.Disk{
+			Name:           &name,
 			SourceSnapshot: &snapshot,
 			Type:           &diskType,
 			SizeGb:         &diskSize,
@@ -62,11 +70,18 @@ func deleteDisk(disk string, zone string) error {
 	}
 	defer client.Close()
 
+	zoneComponents := strings.Split(zone, "/")
+	zone = zoneComponents[len(zoneComponents)-1]
+
+	diskComponents := strings.Split(disk, "/")
+	disk = diskComponents[len(diskComponents)-1]
+
 	req := &computepb.DeleteDiskRequest{
 		Project: config.Project,
 		Zone:    zone,
 		Disk:    disk,
 	}
+
 	op, err := client.Delete(ctx, req)
 	if err != nil {
 		return err

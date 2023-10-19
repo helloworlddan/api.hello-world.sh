@@ -2,15 +2,10 @@ package main
 
 import (
 	"context"
-	"fmt"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"
 )
-
-func snapshotName() string {
-	return fmt.Sprintf("projects/%s/global/snapshots/%s", config.Project, config.SnapshotName)
-}
 
 func getSnapshot() (*computepb.Snapshot, error) {
 	ctx := context.Background()
@@ -22,7 +17,7 @@ func getSnapshot() (*computepb.Snapshot, error) {
 
 	req := &computepb.GetSnapshotRequest{
 		Project:  config.Project,
-		Snapshot: snapshotName(),
+		Snapshot: config.SnapshotName,
 	}
 
 	snapshot, err := client.Get(ctx, req)
@@ -64,4 +59,30 @@ func createSnapshot(diskName string) (*computepb.Snapshot, error) {
 		return nil, err
 	}
 	return snapshot, nil
+}
+
+func deleteSnapshot() error {
+	ctx := context.Background()
+	client, err := compute.NewSnapshotsRESTClient(ctx)
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	req := &computepb.DeleteSnapshotRequest{
+		Project:  config.Project,
+		Snapshot: config.SnapshotName,
+	}
+
+	op, err := client.Delete(ctx, req)
+	if err != nil {
+		return err
+	}
+
+	err = op.Wait(ctx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

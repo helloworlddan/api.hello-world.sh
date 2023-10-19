@@ -59,7 +59,7 @@ func configure() (Config, error) {
 	cfg.Preemtibility = true
 	cfg.ProvisioningModel = "SPOT"
 	cfg.AutoRestart = true
-	cfg.OnHostMaintenance = "MIGRATE"
+	cfg.OnHostMaintenance = "TERMINATE"
 	cfg.SnapshotName = "top"
 	cfg.DiskName = "top"
 	cfg.DiskType = "pd-ssd"

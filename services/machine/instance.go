@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"
@@ -45,15 +46,20 @@ func getInstance() (*computepb.Instance, error) {
 }
 
 func deployInstance(region string) (*computepb.Instance, error) {
+
 	zone, err := findZone(region)
 	if err != nil {
 		return nil, fmt.Errorf("unable to find zone: %v", err)
 	}
 
+	log.Printf("selected zone: %s", zone)
+
 	disk, err := createDisk(zone)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create disk: %v", err)
 	}
+
+	log.Printf("created disk")
 
 	ctx := context.Background()
 	client, err := compute.NewInstancesRESTClient(ctx)
@@ -85,6 +91,20 @@ func deployInstance(region string) (*computepb.Instance, error) {
 				ProvisioningModel: &config.ProvisioningModel,
 				OnHostMaintenance: &config.OnHostMaintenance,
 			},
+			NetworkInterfaces: []*computepb.NetworkInterface{
+				{
+					Name: proto.String("default"),
+					AccessConfigs: []*computepb.AccessConfig{
+						{
+							Name: proto.String("External NAT"),
+							Type: proto.String(
+								computepb.AccessConfig_ONE_TO_ONE_NAT.String(),
+							),
+							NetworkTier: proto.String(computepb.AccessConfig_PREMIUM.String()),
+						},
+					},
+				},
+			},
 		},
 	}
 
@@ -103,10 +123,13 @@ func deployInstance(region string) (*computepb.Instance, error) {
 		return nil, err
 	}
 
+	log.Printf("created disk")
+
 	return instance, nil
 }
 
 func destroyInstance(instance *computepb.Instance) error {
+
 	ctx := context.Background()
 	client, err := compute.NewInstancesRESTClient(ctx)
 	if err != nil {
@@ -114,9 +137,12 @@ func destroyInstance(instance *computepb.Instance) error {
 	}
 	defer client.Close()
 
+	zoneComponents := strings.Split(*instance.Zone, "/")
+	zone := zoneComponents[len(zoneComponents)-1]
+
 	req := &computepb.DeleteInstanceRequest{
 		Project:  config.Project,
-		Zone:     *instance.Zone,
+		Zone:     zone,
 		Instance: *instance.Name,
 	}
 
@@ -130,23 +156,29 @@ func destroyInstance(instance *computepb.Instance) error {
 		return err
 	}
 
-	log.Printf("deleted instance: %s, in zone %s", *instance.Name, *instance.Zone)
+	log.Printf("deleted instance")
 
-	disk := *instance.Disks[0].Source
-
-	snap, err := createSnapshot(disk)
+	err = deleteSnapshot()
 	if err != nil {
 		return err
 	}
 
-	log.Printf("created snapshot: %v", snap.Id)
+	log.Printf("deleted snapshot")
+
+	disk := *instance.Disks[0].Source
+	_, err = createSnapshot(disk)
+	if err != nil {
+		return err
+	}
+
+	log.Printf("created snapshot")
 
 	err = deleteDisk(disk, *instance.Zone)
 	if err != nil {
 		return err
 	}
 
-	log.Printf("deleted disk: %s, in zone %s", disk, *instance.Zone)
+	log.Printf("deleted disk")
 
 	return nil
 }

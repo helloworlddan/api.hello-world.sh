@@ -37,11 +37,14 @@ func findZone(region string) (string, error) {
 			return "", err
 		}
 
-		if resp.GetRegion() != region {
+		current := strings.Split(resp.GetRegion(), "/")
+
+		if current[len(current)-1] != region {
 			continue
 		}
 		return resp.GetName(), nil
 	}
+
 	return "", fmt.Errorf("no suitable zone found for region: %s\n", region)
 }
 
@@ -99,18 +102,18 @@ func ipLocation(ip string) (haversine.Coord, error) {
 func seedRegions() map[string]haversine.Coord {
 	regions := make(map[string]haversine.Coord)
 
-	regions["europe-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-north1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-west3"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-west4"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-central1"] = haversine.Coord{Lat: 52.229, Lon: 21.012}
+	regions["europe-north1"] = haversine.Coord{Lat: 60.569, Lon: 27.187}
+	regions["europe-west1"] = haversine.Coord{Lat: 50.470, Lon: 3.817}
+	regions["europe-west2"] = haversine.Coord{Lat: 51.507, Lon: 0.127}
+	regions["europe-west3"] = haversine.Coord{Lat: 50.110, Lon: 8.682}
+	regions["europe-west4"] = haversine.Coord{Lat: 53.438, Lon: 6.835}
 	regions["europe-west5"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west6"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west7"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west8"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west9"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
-	regions["europe-west10"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west10"] = haversine.Coord{Lat: 52.520, Lon: 13.404}
 	regions["europe-southwest1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 
 	regions["us-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}

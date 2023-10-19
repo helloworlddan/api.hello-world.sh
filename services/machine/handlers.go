@@ -48,6 +48,8 @@ func PatchHandler(c *gin.Context) {
 		return
 	}
 
+	log.Printf("instance not found")
+
 	addr := ipSource(c.Request)
 	log.Printf("client addr is %s\n", addr)
 
@@ -61,6 +63,8 @@ func PatchHandler(c *gin.Context) {
 
 	region, distance := closestRegion(loc)
 	log.Printf("closest region is %s, %.2f kilometers away\n", region, distance)
+
+	log.Printf("deploying instance...")
 
 	instance, err = deployInstance(region)
 	if err != nil {
@@ -84,6 +88,8 @@ func PatchHandler(c *gin.Context) {
 
 	// Instance running
 	time.Sleep(time.Second * 8) // wait for boot
+
+	log.Printf("operation complete")
 
 	response = make(map[string]string)
 	response["status"] = *instance.Status
@@ -109,6 +115,10 @@ func DeleteHandler(c *gin.Context) {
 		return
 	}
 
+	log.Printf("instance found")
+
+	log.Printf("deleting instance...")
+
 	err = destroyInstance(instance)
 	if err != nil {
 		log.Printf("failed to destroy VM: %v\n", err)
@@ -117,7 +127,9 @@ func DeleteHandler(c *gin.Context) {
 		return
 	}
 
-	response["status"] = *instance.Status
+	log.Printf("operation complete")
+
+	response["status"] = "DESTROYED"
 	c.JSON(http.StatusOK, response)
 }
 
