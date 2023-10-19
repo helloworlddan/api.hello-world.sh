@@ -51,7 +51,7 @@ func findZone(region string) (string, error) {
 func ipSource(r *http.Request) string {
 	addr := r.Header.Get("TOP-DEBUG-IP")
 	if addr == "" {
-		addr = r.RemoteAddr
+		addr = strings.Split(r.RemoteAddr, ":")[0]
 	}
 	return addr
 }
@@ -110,11 +110,13 @@ func seedRegions() map[string]haversine.Coord {
 	regions["europe-west6"] = haversine.Coord{Lat: 47.376, Lon: 8.541}
 	// regions["europe-west7"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["europe-west8"] = haversine.Coord{Lat: 45.464, Lon: 9.190}
-	regions["europe-west9"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west9"] = haversine.Coord{Lat: 48.856, Lon: 2.352}
 	regions["europe-west10"] = haversine.Coord{Lat: 52.520, Lon: 13.404}
-	regions["europe-southwest1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	// regions["europe-west11"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["europe-west12"] = haversine.Coord{Lat: 47.070, Lon: 7.686}
+	regions["europe-southwest1"] = haversine.Coord{Lat: 40.416, Lon: 3.703}
 
-	regions["us-central1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
+	regions["us-central1"] = haversine.Coord{Lat: 41.261, Lon: 95.860}
 	regions["us-west1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["us-west2"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
 	regions["us-east1"] = haversine.Coord{Lat: 0.0, Lon: 0.0}
