@@ -1,6 +1,3 @@
-all:
-	top things proxy
-
 deploy:
 	make -C infrastructure init apply
 
