@@ -53,14 +53,6 @@ resource "google_cloud_run_service" "machine" {
           name  = "TOP_OWNER"
           value = local.owner
         }
-        env {
-          name  = "TOP_MACHINE"
-          value = local.machine
-        }
-        env {
-          name  = "TOP_ZONE"
-          value = local.zone
-        }
       }
     }
     metadata {

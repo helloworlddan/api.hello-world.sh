@@ -17,4 +17,4 @@ machine:
 
 services: machine
 
-.PHONY: deploy destroy top proxy services machine
+.PHONY: deploy destroy top proxy machine

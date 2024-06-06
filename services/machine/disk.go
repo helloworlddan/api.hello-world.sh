@@ -12,8 +12,7 @@ import (
 func createDisk(zone string) (*computepb.Disk, error) {
 	name := "top"
 
-	var diskSize int64
-	diskSize = 30
+	var diskSize int64 = 30
 
 	ctx := context.Background()
 	client, err := compute.NewDisksRESTClient(ctx)

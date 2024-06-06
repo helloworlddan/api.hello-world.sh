@@ -7,9 +7,6 @@ locals {
   repo           = "api.hello-world.sh"
   repo_owner     = "helloworlddan"
   branch         = "master"
-  organization   = "892444794895"
-  machine        = "top"
-  zone           = "${local.region}-a"
   owner          = "dan@hello-world.sh"
   session        = "ca683f00-d51c-4f1a-af5e-5f9a25b3f4a8"
 }

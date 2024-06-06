@@ -1,12 +1,12 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: HWSH API
   description: HWSH API
   version: 1.0.0
 host: api.hello-world.sh
 x-google-endpoints:
-- name: api.hello-world.sh
-  allowCors: True
+  - name: api.hello-world.sh
+    allowCors: True
 schemes:
   - https
 produces:
@@ -20,25 +20,6 @@ securityDefinitions:
     x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
     x-google-audiences: "hwsh-api"
 paths:
-  /static/{path}:
-    get:
-      summary: Get static assets
-      operationId: get-static
-      parameters:
-        - in: path
-          name: path
-          type: string
-          required: true
-          description: path of static asset
-      x-google-backend:
-        address: https://hwsh-api-static-e37jkmtdgq-ez.a.run.app 
-        protocol: h2
-        path_translation: APPEND_PATH_TO_ADDRESS
-      responses:
-        '200':
-          description: A successful response
-          schema:
-            type: string
   /machine:
     options:
       summary: CORS preflights
@@ -48,7 +29,7 @@ paths:
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
-        '204':
+        "204":
           description: A successful response
           schema:
             type: string
@@ -62,7 +43,7 @@ paths:
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
-        '200':
+        "200":
           description: A successful response
           schema:
             type: string
@@ -76,7 +57,7 @@ paths:
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
-        '200':
+        "200":
           description: A successful response
           schema:
             type: string
@@ -90,8 +71,8 @@ paths:
         protocol: h2
         path_translation: APPEND_PATH_TO_ADDRESS
       responses:
-        '200':
+        "200":
           description: A successful response
           schema:
             type: string
-  
+

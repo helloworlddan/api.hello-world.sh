@@ -19,21 +19,20 @@ type Principal struct {
 
 // Config holds the complete context of the managed machine
 type Config struct {
-	Session     string
-	Owner       string
-	Project     string
-	Environment string
-	Regions     map[string]haversine.Coord
-
-	InstanceName      string
+	Regions           map[string]haversine.Coord
 	MachineType       string
-	Preemtibility     bool
+	Project           string
+	Environment       string
+	Owner             string
+	InstanceName      string
+	Session           string
 	ProvisioningModel string
-	AutoRestart       bool
 	OnHostMaintenance string
 	SnapshotName      string
 	DiskName          string
 	DiskType          string
+	Preemtibility     bool
+	AutoRestart       bool
 }
 
 var config *Config
