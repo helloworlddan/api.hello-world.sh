@@ -1,5 +1,4 @@
-all:
-	top things proxy
+all: top machine proxy
 
 deploy:
 	make -C infrastructure init apply
@@ -16,9 +15,6 @@ proxy:
 machine:
 	make -C services/machine build
 
-static:
-	make -C services/static build
+services: machine
 
-services: static machine
-
-.PHONY: static deploy destroy top proxy services machine static
+.PHONY: deploy destroy top proxy services machine
