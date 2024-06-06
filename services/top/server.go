@@ -17,7 +17,7 @@ func main() {
 		log.Printf("defaulting to port %s", port)
 	}
 
-	log.Println(fmt.Sprintf("Listening on :%s...", port))
+	log.Printf("Listening on :%s...", port)
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 	if err != nil {
 		log.Fatal(err)

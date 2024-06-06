@@ -1,16 +1,12 @@
-FROM golang:1.15-buster as builder
+FROM golang:1.22-bookworm as builder
 WORKDIR /app
 COPY go.* ./
 RUN go mod download
 COPY . ./
-RUN go build -v -o server
+RUN CGO_ENABLED=0 go build -v -o server
 
-FROM debian:buster-slim
-RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
-
+FROM gcr.io/distroless/static
 WORKDIR /app
-COPY ./static /app/static
 COPY --from=builder /app/server /app/server
+COPY ./static /app/static
 CMD ["/app/server"]
